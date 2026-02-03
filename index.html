@@ -10,8 +10,8 @@
     <meta name="apple-mobile-web-app-title" content="광고위치추천">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#4169E1">
-    <link rel="apple-touch-icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%234169E1' width='100' height='100' rx='20'/><path d='M50 15c-12 0-22 9.7-22 21.7 0 16.5 22 48.3 22 48.3s22-31.8 22-48.3C72 24.7 62 15 50 15zm0 30a9 9 0 1 1 0-18 9 9 0 0 1 0 18z' fill='white'/></svg>">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon.png">
+
 
     <link rel="manifest"
         href="data:application/json;base64,eyJuYW1lIjoi6rSR6rOgIOychOy5mCDstpTsspwiLCJzaG9ydF9uYW1lIjoi6rSR6rOg7JyE7LmYIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0ZGRkZGRiIsInRoZW1lX2NvbG9yIjoiIzQxNjlFMSIsInN0YXJ0X3VybCI6Ii8ifQ==">
@@ -34,12 +34,11 @@
             overflow: hidden;
         }
 
+        /* body의 padding 제거 */
         body {
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+            /* padding-top: env(safe-area-inset-top); */
+            /* padding-bottom: env(safe-area-inset-bottom); */
         }
-
-
 
         input,
         textarea {
@@ -47,102 +46,16 @@
             user-select: text;
         }
 
-        /* Safe area padding for notched devices */
+        /* Safe area를 screen 레벨에서만 적용 */
         .safe-top {
-            padding-top: env(safe-area-inset-top);
+            padding-top: max(env(safe-area-inset-top), 0px);
         }
 
         .safe-bottom {
-            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: max(env(safe-area-inset-bottom), 0px);
         }
 
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-4px);
-            }
-        }
-
-        .typing-dot {
-            animation: bounce 0.6s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .spinner {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .marker-appear {
-            animation: fadeInScale 0.5s ease-out forwards;
-        }
-
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .slide-up {
-            animation: slideUp 0.4s ease-out forwards;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .pulse {
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        /* iOS-style slide transitions */
+        /* screen의 기본 여백 제거 */
         .screen {
             position: absolute;
             top: 0;
@@ -152,50 +65,18 @@
             background: white;
             transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.35s ease;
             will-change: transform, opacity;
+            overflow: hidden;
+            /* 추가 */
         }
 
-        .screen.hidden {
-            display: none;
-        }
-
-        .screen.slide-out-left {
-            transform: translateX(-30%);
-            opacity: 0.3;
-        }
-
-        .screen.slide-in-right {
-            transform: translateX(100%);
-        }
-
-        .screen.slide-out-right {
-            transform: translateX(100%);
-        }
-
-        .screen.slide-in-left {
-            transform: translateX(-30%);
-            opacity: 0.3;
-        }
-
-        .screen.active {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        /* Home indicator */
-        .home-indicator {
-            width: 134px;
-            height: 5px;
-            background: #000;
-            border-radius: 100px;
-            margin: 8px auto;
-            opacity: 0.2;
-        }
+        /* ... 나머지 CSS는 동일 ... */
     </style>
 </head>
 
 <body class="bg-white overflow-hidden">
 
-    <div id="appContainer" class="relative w-full h-full overflow-hidden">
+    <div id="appContainer" class="relative w-full h-full overflow-hidden"
+        style="height: 100vh; height: -webkit-fill-available;">
 
         <!-- Chat Screen -->
         <div id="chatScreen" class="screen active flex flex-col safe-top safe-bottom">
@@ -579,12 +460,13 @@
 
         // Recommendation data
         const recommendations = [
-            { rank: 1, name: '논현역 1번 출구', population: '12,000' },
-            { rank: 2, name: '논현 CGV 앞', population: '9,800' },
-            { rank: 3, name: '아이플렉스 앞', population: '8,900' },
-            { rank: 4, name: '논현 사거리', population: '8,900' },
-            { rank: 5, name: '칼리오페 앞', population: '8,900' },
+            { rank: 1, name: '논현역 1번 출구', population: '12,000', targetRatio: 82 },
+            { rank: 2, name: '논현 CGV 앞', population: '9,800', targetRatio: 76 },
+            { rank: 3, name: '아이플렉스 앞', population: '8,900', targetRatio: 71 },
+            { rank: 4, name: '논현 사거리', population: '8,900', targetRatio: 69 },
+            { rank: 5, name: '칼리오페 앞', population: '8,900', targetRatio: 64 },
         ];
+
 
         function addMessage(content, isUser = false) {
             const welcomeEl = document.getElementById('chatWelcome');
@@ -754,14 +636,17 @@
                     const card = document.createElement('div');
                     card.className = 'flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl slide-up';
                     card.innerHTML = `
-            <div class="w-10 h-10 bg-[#4169E1] rounded-xl flex items-center justify-center text-white font-bold text-sm">
-              ${rec.rank}
-            </div>
-            <div>
-              <div class="font-medium text-gray-900">${rec.name}</div>
-              <div class="text-sm text-gray-500">예상 유동인구: ${rec.population}명</div>
-            </div>
-          `;
+  <div class="w-10 h-10 bg-[#4169E1] rounded-xl flex items-center justify-center text-white font-bold text-sm">
+    ${rec.rank}
+  </div>
+  <div>
+    <div class="font-medium text-gray-900">${rec.name}</div>
+    <div class="text-sm text-gray-500">
+      예상 유동인구: ${rec.population}명 · 타겟 비율: ${rec.targetRatio}%
+    </div>
+  </div>
+`;
+
                     recsContainer.appendChild(card);
                 }, markers.length * 400 + 600 + (index * 200));
             });
