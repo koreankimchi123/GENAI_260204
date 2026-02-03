@@ -1,534 +1,625 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="광고위치추천">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#4169E1">
- <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%234169E1' width='100' height='100' rx='20'/><path d='M50 15c-12 0-22 9.7-22 21.7 0 16.5 22 48.3 22 48.3s22-31.8 22-48.3C72 24.7 62 15 50 15zm0 30a9 9 0 1 1 0-18 9 9 0 0 1 0 18z' fill='white'/></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="광고위치추천">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#4169E1">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%234169E1' width='100' height='100' rx='20'/><path d='M50 15c-12 0-22 9.7-22 21.7 0 16.5 22 48.3 22 48.3s22-31.8 22-48.3C72 24.7 62 15 50 15zm0 30a9 9 0 1 1 0-18 9 9 0 0 1 0 18z' fill='white'/></svg>">
 
-  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi6rSR6rOgIOychOy5mCDstpTsspwiLCJzaG9ydF9uYW1lIjoi6rSR6rOg7JyE7LmYIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0ZGRkZGRiIsInRoZW1lX2NvbG9yIjoiIzQxNjlFMSIsInN0YXJ0X3VybCI6Ii8ifQ==">
-  <title>광고 위치 추천</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    * {
-      -webkit-tap-highlight-color: transparent;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-    
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-    }
-    
-    input, textarea {
-      -webkit-user-select: text;
-      user-select: text;
-    }
-    
-    /* Safe area padding for notched devices */
-    .safe-top { padding-top: env(safe-area-inset-top); }
-    .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    .typing-dot {
-      animation: bounce 0.6s infinite;
-    }
-    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .spinner {
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes fadeInScale {
-      0% { opacity: 0; transform: scale(0); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    .marker-appear {
-      animation: fadeInScale 0.5s ease-out forwards;
-    }
-    
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .slide-up {
-      animation: slideUp 0.4s ease-out forwards;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    .pulse {
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    
-    /* iOS-style slide transitions */
-    .screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.35s ease;
-      will-change: transform, opacity;
-    }
-    
-    .screen.hidden {
-      display: none;
-    }
-    
-    .screen.slide-out-left {
-      transform: translateX(-30%);
-      opacity: 0.3;
-    }
-    
-    .screen.slide-in-right {
-      transform: translateX(100%);
-    }
-    
-    .screen.slide-out-right {
-      transform: translateX(100%);
-    }
-    
-    .screen.slide-in-left {
-      transform: translateX(-30%);
-      opacity: 0.3;
-    }
-    
-    .screen.active {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    
-    /* Home indicator */
-    .home-indicator {
-      width: 134px;
-      height: 5px;
-      background: #000;
-      border-radius: 100px;
-      margin: 8px auto;
-      opacity: 0.2;
-    }
-  </style>
+    <link rel="manifest"
+        href="data:application/json;base64,eyJuYW1lIjoi6rSR6rOgIOychOy5mCDstpTsspwiLCJzaG9ydF9uYW1lIjoi6rSR6rOg7JyE7LmYIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0ZGRkZGRiIsInRoZW1lX2NvbG9yIjoiIzQxNjlFMSIsInN0YXJ0X3VybCI6Ii8ifQ==">
+    <title>W</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+
+
+        input,
+        textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        /* Safe area padding for notched devices */
+        .safe-top {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .typing-dot {
+            animation: bounce 0.6s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .marker-appear {
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* iOS-style slide transitions */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.35s ease;
+            will-change: transform, opacity;
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        .screen.slide-out-left {
+            transform: translateX(-30%);
+            opacity: 0.3;
+        }
+
+        .screen.slide-in-right {
+            transform: translateX(100%);
+        }
+
+        .screen.slide-out-right {
+            transform: translateX(100%);
+        }
+
+        .screen.slide-in-left {
+            transform: translateX(-30%);
+            opacity: 0.3;
+        }
+
+        .screen.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* Home indicator */
+        .home-indicator {
+            width: 134px;
+            height: 5px;
+            background: #000;
+            border-radius: 100px;
+            margin: 8px auto;
+            opacity: 0.2;
+        }
+    </style>
 </head>
+
 <body class="bg-white overflow-hidden">
-  
-  <div id="appContainer" class="relative w-full h-full overflow-hidden">
-    
-    <!-- Chat Screen -->
-    <div id="chatScreen" class="screen active flex flex-col safe-top safe-bottom">
-      <!-- Status Bar Spacer -->
-      <div class="h-12 bg-white"></div>
-      
-      <!-- Chat Container -->
-      <div class="flex-1 flex flex-col justify-center px-6 overflow-hidden">
-        <!-- Logo and Title (centered like ChatGPT) -->
-        <div id="chatWelcome" class="text-center mb-8">
-          <div class="w-20 h-20 bg-[#4169E1] rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-lg">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-  <circle cx="12" cy="10" r="3"/>
-</svg>
 
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-          </div>
-          <h1 class="text-gray-900 text-2xl font-semibold mb-3">원하시는 고객층이 무엇인가요?</h1>
-          <p class="text-gray-500 text-base leading-relaxed">타겟 고객층을 알려주시면<br/>최적의 오프라인 광고 위치를 찾아드립니다</p>
+    <div id="appContainer" class="relative w-full h-full overflow-hidden">
+
+        <!-- Chat Screen -->
+        <div id="chatScreen" class="screen active flex flex-col safe-top safe-bottom">
+
+
+            <!-- Chat Container -->
+            <div class="flex-1 flex flex-col justify-center px-6 overflow-hidden">
+                <!-- Logo and Title (centered like ChatGPT) -->
+                <div id="chatWelcome" class="text-center mb-8">
+                    <div
+                        class="w-20 h-20 bg-[#4169E1] rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </div>
+                    <h1 class="text-gray-900 text-2xl font-semibold mb-3">원하시는 고객층이 무엇인가요?</h1>
+                    <p class="text-gray-500 text-base leading-relaxed">타겟 고객층을 알려주시면<br />최적의 오프라인 광고 위치를 찾아드립니다</p>
+                </div>
+
+                <!-- Chat Messages -->
+                <div id="chatMessages" class="space-y-4 max-h-[40vh] overflow-y-auto">
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="px-5 pb-2">
+                <div class="relative">
+                    <input type="text" id="messageInput" placeholder="예: 마라탕을 좋아하는 사람"
+                        class="w-full border border-gray-200 rounded-2xl px-5 py-4 pr-14 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#4169E1] focus:ring-2 focus:ring-blue-100 bg-gray-50 text-base" />
+                    <button id="sendBtn"
+                        class="absolute right-2 top-1/2 -translate-y-1/2 bg-[#4169E1] text-white w-11 h-11 rounded-xl flex items-center justify-center active:bg-blue-700 transition-colors">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-3">AI가 분석한 결과를 기반으로 추천합니다</p>
+            </div>
+
         </div>
 
-        <!-- Chat Messages -->
-        <div id="chatMessages" class="space-y-4 max-h-[40vh] overflow-y-auto">
-        </div>
-      </div>
+        <!-- Form Screen -->
+        <div id="formScreen" class="screen hidden slide-in-right flex flex-col safe-top safe-bottom">
+            <!-- Header -->
+            <div class="bg-[#4169E1] px-6 pt-14 pb-8">
+                <div class="flex items-center gap-3">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
 
-      <!-- Input Area -->
-      <div class="px-5 pb-2">
-        <div class="relative">
-          <input 
-            type="text" 
-            id="messageInput"
-            placeholder="예: 마라탕을 좋아하는 사람" 
-            class="w-full border border-gray-200 rounded-2xl px-5 py-4 pr-14 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#4169E1] focus:ring-2 focus:ring-blue-100 bg-gray-50 text-base"
-          />
-          <button 
-            id="sendBtn"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-[#4169E1] text-white w-11 h-11 rounded-xl flex items-center justify-center active:bg-blue-700 transition-colors"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-        </div>
-        <p class="text-center text-xs text-gray-400 mt-3">AI가 분석한 결과를 기반으로 추천합니다</p>
-      </div>
+                    <h1 class="text-white text-2xl font-bold">상권 분석</h1>
+                </div>
+                <p class="text-white/80 text-sm mt-2">매장 정보를 입력하고 최적의 광고 위치를 찾아보세요</p>
+            </div>
 
-      <!-- Home Indicator -->
-      <div class="home-indicator"></div>
+            <!-- Form Content -->
+            <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+                <!-- 업종 -->
+                <div>
+                    <label class="text-gray-700 text-sm font-medium mb-2 block">업종</label>
+                    <div class="relative">
+                        <select
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-gray-500 appearance-none bg-white focus:outline-none focus:border-blue-500 text-base">
+                            <option>업종을 선택하세요</option>
+                            <option>음식점</option>
+                            <option>카페</option>
+                            <option>소매점</option>
+                        </select>
+                        <svg class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 타겟 연령대 -->
+                <div>
+                    <label class="text-gray-700 text-sm font-medium mb-3 block">타겟 연령대</label>
+                    <div class="grid grid-cols-3 gap-3" id="ageGroup">
+                        <button
+                            class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-age="10대">10대</button>
+                        <button
+                            class="age-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all"
+                            data-age="20대">20대</button>
+                        <button
+                            class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-age="30대">30대</button>
+                        <button
+                            class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-age="40대">40대</button>
+                        <button
+                            class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-age="50대">50대</button>
+                        <button
+                            class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-age="60대">60대</button>
+                    </div>
+                </div>
+
+                <!-- 타겟 성별 -->
+                <div>
+                    <label class="text-gray-700 text-sm font-medium mb-3 block">타겟 성별</label>
+                    <div class="grid grid-cols-3 gap-3" id="genderGroup">
+                        <button
+                            class="gender-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-gender="남성">남성</button>
+                        <button
+                            class="gender-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all"
+                            data-gender="여성">여성</button>
+                        <button
+                            class="gender-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-gender="전체">전체</button>
+                    </div>
+                </div>
+
+                <!-- 매장 위치 -->
+                <div>
+                    <label class="text-gray-700 text-sm font-medium mb-2 block">매장 위치</label>
+                    <input type="text" id="locationInput" placeholder="예: 역삼동"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-500 text-base" />
+                </div>
+
+                <!-- 광고 유형 -->
+                <div>
+                    <label class="text-gray-700 text-sm font-medium mb-3 block">광고 유형</label>
+                    <div class="grid grid-cols-2 gap-3" id="adTypeGroup">
+                        <button
+                            class="adtype-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all"
+                            data-type="전단지">전단지</button>
+                        <button
+                            class="adtype-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all"
+                            data-type="배너/현수막">배너/현수막</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Button -->
+            <div class="px-6 pb-2">
+                <div class="border-t border-gray-200 pt-4">
+                    <button id="analyzeBtn"
+                        class="w-full bg-[#4169E1] text-white py-4 rounded-xl font-medium text-base active:bg-blue-700 transition-colors">
+                        분석 시작하기
+                    </button>
+                </div>
+            </div>
+
+            <!-- Home Indicator -->
+            <div class="home-indicator"></div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen"
+            class="screen hidden slide-in-right flex-col items-center justify-center safe-top safe-bottom">
+            <div class="flex flex-col items-center gap-6">
+                <div class="w-16 h-16 border-4 border-gray-200 border-t-[#4169E1] rounded-full spinner"></div>
+                <div class="text-center">
+                    <p class="text-gray-800 font-medium text-lg">분석 중입니다</p>
+                    <p class="text-gray-500 text-sm mt-2 pulse">유동인구 데이터를 수집하고 있습니다...</p>
+                </div>
+            </div>
+            <!-- Home Indicator -->
+            <div class="absolute bottom-0 left-0 right-0">
+                <div class="home-indicator"></div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="screen hidden slide-in-right flex-col safe-top safe-bottom">
+            <!-- Header -->
+            <div class="px-4 pt-14 pb-4 flex items-center gap-3 border-b border-gray-100 bg-white">
+                <button id="backBtn" class="p-2 -ml-2 active:bg-gray-100 rounded-full transition-colors">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <div>
+                    <h1 class="text-gray-900 font-bold text-lg">인천 논현동 유동인구 분석</h1>
+                    <p class="text-gray-500 text-xs">뷰티/미용 · 전단지</p>
+                </div>
+            </div>
+
+            <!-- Time Selection -->
+            <div class="px-4 py-3 bg-white">
+                <div class="flex items-center gap-2 mb-3">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        class="text-gray-600">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span class="text-gray-700 text-sm font-medium">시간대 선택</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2" id="timeGroup">
+                    <button
+                        class="time-btn py-3 px-2 rounded-xl border border-gray-300 text-center active:scale-95 transition-all"
+                        data-time="morning">
+                        <div class="text-sm font-medium text-gray-700">오전</div>
+                        <div class="text-xs text-gray-500">07:00-12:00</div>
+                    </button>
+                    <button
+                        class="time-btn py-3 px-2 rounded-xl border border-blue-500 bg-[#4169E1] text-center active:scale-95 transition-all"
+                        data-time="afternoon">
+                        <div class="text-sm font-medium text-white">오후</div>
+                        <div class="text-xs text-blue-100">12:00-18:00</div>
+                    </button>
+                    <button
+                        class="time-btn py-3 px-2 rounded-xl border border-gray-300 text-center active:scale-95 transition-all"
+                        data-time="evening">
+                        <div class="text-sm font-medium text-gray-700">저녁</div>
+                        <div class="text-xs text-gray-500">18:00-22:00</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Map Area -->
+            <div class="relative bg-gray-100 mx-4 rounded-2xl overflow-hidden" style="height: 240px;">
+                <!-- Grid lines -->
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 240">
+                    <line x1="0" y1="50" x2="300" y2="170" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="0" y1="100" x2="300" y2="220" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="50" y1="0" x2="170" y2="240" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="100" y1="0" x2="220" y2="240" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="150" y1="0" x2="270" y2="240" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="0" y1="120" x2="120" y2="0" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="0" y1="170" x2="170" y2="0" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="0" y1="220" x2="220" y2="0" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="30" y1="240" x2="270" y2="0" stroke="#d1d5db" stroke-width="1" />
+                    <line x1="80" y1="240" x2="300" y2="20" stroke="#d1d5db" stroke-width="1" />
+                </svg>
+
+                <!-- Markers Container -->
+                <div id="markersContainer" class="absolute inset-0">
+                </div>
+
+                <!-- Legend -->
+                <div class="absolute top-3 right-3 bg-white rounded-xl shadow-lg p-3 text-xs">
+                    <div class="flex items-center gap-2 mb-2">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" class="text-gray-500">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                        <span class="font-medium text-gray-700">유동인구 밀집도</span>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#6B8DD6]"></div>
+                            <span class="text-gray-600">높음</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#93B5FF]"></div>
+                            <span class="text-gray-600">중간</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#C5D9FF]"></div>
+                            <span class="text-gray-600">낮음</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-2 pt-2 border-t border-gray-100">
+                            <div class="w-3 h-3 rounded-full bg-[#22C55E] border-2 border-white shadow"></div>
+                            <span class="text-gray-600">내 매장</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Badge -->
+            <div class="px-4 py-3">
+                <div id="infoBadge"
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full border border-blue-200 opacity-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        class="text-blue-500">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                    <span class="text-sm font-medium text-blue-700">20대 여성 유동 인구 집중 지역</span>
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="flex-1 overflow-y-auto px-4 pb-4">
+                <h2 id="recTitle" class="text-gray-900 font-bold text-base mb-3 opacity-0">추천 광고 위치 (오후)</h2>
+
+                <div id="recommendations" class="space-y-3">
+                </div>
+
+                <!-- Footer Note -->
+                <div id="footerNote" class="flex items-start gap-2 mt-4 text-xs text-gray-500 opacity-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        class="flex-shrink-0 mt-0.5">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                    <span>공공데이터 기반 유동인구 분석 결과입니다. 실제 광고 효과는 다를 수 있습니다.</span>
+                </div>
+            </div>
+
+            <!-- Home Indicator -->
+            <div class="home-indicator"></div>
+        </div>
     </div>
 
-    <!-- Form Screen -->
-    <div id="formScreen" class="screen hidden slide-in-right flex flex-col safe-top safe-bottom">
-      <!-- Header -->
-      <div class="bg-[#4169E1] px-6 pt-14 pb-8">
-        <div class="flex items-center gap-3">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-  <circle cx="12" cy="10" r="3"/>
-</svg>
+    <script>
+        const chatScreen = document.getElementById('chatScreen');
+        const formScreen = document.getElementById('formScreen');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const backBtn = document.getElementById('backBtn');
 
-          <h1 class="text-white text-2xl font-bold">상권 분석</h1>
+        // iOS-style screen transition
+        function slideToScreen(fromScreen, toScreen, reverse = false) {
+            // Prepare toScreen
+            toScreen.classList.remove('hidden');
+            toScreen.style.display = 'flex';
+
+            if (reverse) {
+                // Going back - toScreen slides in from left, fromScreen slides out to right
+                toScreen.classList.add('slide-in-left');
+                toScreen.classList.remove('slide-in-right', 'active');
+
+                // Force reflow
+                toScreen.offsetHeight;
+
+                // Animate
+                requestAnimationFrame(() => {
+                    fromScreen.classList.add('slide-out-right');
+                    fromScreen.classList.remove('active');
+                    toScreen.classList.remove('slide-in-left');
+                    toScreen.classList.add('active');
+                });
+            } else {
+                // Going forward - toScreen slides in from right, fromScreen slides out to left
+                toScreen.classList.add('slide-in-right');
+                toScreen.classList.remove('slide-in-left', 'active');
+
+                // Force reflow
+                toScreen.offsetHeight;
+
+                // Animate
+                requestAnimationFrame(() => {
+                    fromScreen.classList.add('slide-out-left');
+                    fromScreen.classList.remove('active');
+                    toScreen.classList.remove('slide-in-right');
+                    toScreen.classList.add('active');
+                });
+            }
+
+            // Cleanup after animation
+            setTimeout(() => {
+                fromScreen.classList.add('hidden');
+                fromScreen.classList.remove('slide-out-left', 'slide-out-right');
+                fromScreen.style.display = '';
+            }, 350);
+        }
+
+        // Marker data
+        const markers = [
+            { x: 30, y: 50, size: 70, color: '#6B8DD6', opacity: 0.7 },
+            { x: 130, y: 130, size: 22, color: '#22C55E', opacity: 1, isStore: true },
+            { x: 85, y: 170, size: 45, color: '#93B5FF', opacity: 0.6 },
+            { x: 115, y: 210, size: 35, color: '#6B8DD6', opacity: 0.7 },
+            { x: 180, y: 95, size: 30, color: '#C5D9FF', opacity: 0.5 },
+        ];
+
+        // Recommendation data
+        const recommendations = [
+            { rank: 1, name: '논현역 1번 출구', population: '12,000' },
+            { rank: 2, name: '논현 CGV 앞', population: '9,800' },
+            { rank: 3, name: '아이플렉스 앞', population: '8,900' },
+            { rank: 4, name: '논현 사거리', population: '8,900' },
+            { rank: 5, name: '칼리오페 앞', population: '8,900' },
+        ];
+
+        function addMessage(content, isUser = false) {
+            const welcomeEl = document.getElementById('chatWelcome');
+            if (welcomeEl && chatMessages.children.length === 0) {
+                welcomeEl.style.display = 'none';
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
+            messageDiv.innerHTML = `
+        <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center ${isUser
+                    ? 'bg-gray-200'
+                    : 'bg-[#4169E1]'
+                }">
+          ${isUser
+                    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+                    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+                }
         </div>
-        <p class="text-white/80 text-sm mt-2">매장 정보를 입력하고 최적의 광고 위치를 찾아보세요</p>
-      </div>
-
-      <!-- Form Content -->
-      <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
-        <!-- 업종 -->
-        <div>
-          <label class="text-gray-700 text-sm font-medium mb-2 block">업종</label>
-          <div class="relative">
-            <select class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-gray-500 appearance-none bg-white focus:outline-none focus:border-blue-500 text-base">
-              <option>업종을 선택하세요</option>
-              <option>음식점</option>
-              <option>카페</option>
-              <option>소매점</option>
-            </select>
-            <svg class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- 타겟 연령대 -->
-        <div>
-          <label class="text-gray-700 text-sm font-medium mb-3 block">타겟 연령대</label>
-          <div class="grid grid-cols-3 gap-3" id="ageGroup">
-            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="10대">10대</button>
-            <button class="age-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all" data-age="20대">20대</button>
-            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="30대">30대</button>
-            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="40대">40대</button>
-            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="50대">50대</button>
-            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="60대">60대</button>
-          </div>
-        </div>
-
-        <!-- 타겟 성별 -->
-        <div>
-          <label class="text-gray-700 text-sm font-medium mb-3 block">타겟 성별</label>
-          <div class="grid grid-cols-3 gap-3" id="genderGroup">
-            <button class="gender-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-gender="남성">남성</button>
-            <button class="gender-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all" data-gender="여성">여성</button>
-            <button class="gender-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-gender="전체">전체</button>
-          </div>
-        </div>
-
-        <!-- 매장 위치 -->
-        <div>
-          <label class="text-gray-700 text-sm font-medium mb-2 block">매장 위치</label>
-          <input 
-            type="text" 
-            id="locationInput"
-            placeholder="예: 역삼동" 
-            class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-500 text-base"
-          />
-        </div>
-
-        <!-- 광고 유형 -->
-        <div>
-          <label class="text-gray-700 text-sm font-medium mb-3 block">광고 유형</label>
-          <div class="grid grid-cols-2 gap-3" id="adTypeGroup">
-            <button class="adtype-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all" data-type="전단지">전단지</button>
-            <button class="adtype-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-type="배너/현수막">배너/현수막</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Button -->
-      <div class="px-6 pb-2">
-        <div class="border-t border-gray-200 pt-4">
-          <button id="analyzeBtn" class="w-full bg-[#4169E1] text-white py-4 rounded-xl font-medium text-base active:bg-blue-700 transition-colors">
-            분석 시작하기
-          </button>
-        </div>
-      </div>
-
-      <!-- Home Indicator -->
-      <div class="home-indicator"></div>
-    </div>
-
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="screen hidden slide-in-right flex-col items-center justify-center safe-top safe-bottom">
-      <div class="flex flex-col items-center gap-6">
-        <div class="w-16 h-16 border-4 border-gray-200 border-t-[#4169E1] rounded-full spinner"></div>
-        <div class="text-center">
-          <p class="text-gray-800 font-medium text-lg">분석 중입니다</p>
-          <p class="text-gray-500 text-sm mt-2 pulse">유동인구 데이터를 수집하고 있습니다...</p>
-        </div>
-      </div>
-      <!-- Home Indicator -->
-      <div class="absolute bottom-0 left-0 right-0">
-        <div class="home-indicator"></div>
-      </div>
-    </div>
-
-    <!-- Result Screen -->
-    <div id="resultScreen" class="screen hidden slide-in-right flex-col safe-top safe-bottom">
-      <!-- Header -->
-      <div class="px-4 pt-14 pb-4 flex items-center gap-3 border-b border-gray-100 bg-white">
-        <button id="backBtn" class="p-2 -ml-2 active:bg-gray-100 rounded-full transition-colors">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-        </button>
-        <div>
-          <h1 class="text-gray-900 font-bold text-lg">인천 논현동 유동인구 분석</h1>
-          <p class="text-gray-500 text-xs">뷰티/미용 · 전단지</p>
-        </div>
-      </div>
-
-      <!-- Time Selection -->
-      <div class="px-4 py-3 bg-white">
-        <div class="flex items-center gap-2 mb-3">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-600">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
-          </svg>
-          <span class="text-gray-700 text-sm font-medium">시간대 선택</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2" id="timeGroup">
-          <button class="time-btn py-3 px-2 rounded-xl border border-gray-300 text-center active:scale-95 transition-all" data-time="morning">
-            <div class="text-sm font-medium text-gray-700">오전</div>
-            <div class="text-xs text-gray-500">07:00-12:00</div>
-          </button>
-          <button class="time-btn py-3 px-2 rounded-xl border border-blue-500 bg-[#4169E1] text-center active:scale-95 transition-all" data-time="afternoon">
-            <div class="text-sm font-medium text-white">오후</div>
-            <div class="text-xs text-blue-100">12:00-18:00</div>
-          </button>
-          <button class="time-btn py-3 px-2 rounded-xl border border-gray-300 text-center active:scale-95 transition-all" data-time="evening">
-            <div class="text-sm font-medium text-gray-700">저녁</div>
-            <div class="text-xs text-gray-500">18:00-22:00</div>
-          </button>
-        </div>
-      </div>
-
-      <!-- Map Area -->
-      <div class="relative bg-gray-100 mx-4 rounded-2xl overflow-hidden" style="height: 240px;">
-        <!-- Grid lines -->
-        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 240">
-          <line x1="0" y1="50" x2="300" y2="170" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="0" y1="100" x2="300" y2="220" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="50" y1="0" x2="170" y2="240" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="100" y1="0" x2="220" y2="240" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="150" y1="0" x2="270" y2="240" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="0" y1="120" x2="120" y2="0" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="0" y1="170" x2="170" y2="0" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="0" y1="220" x2="220" y2="0" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="30" y1="240" x2="270" y2="0" stroke="#d1d5db" stroke-width="1"/>
-          <line x1="80" y1="240" x2="300" y2="20" stroke="#d1d5db" stroke-width="1"/>
-        </svg>
-        
-        <!-- Markers Container -->
-        <div id="markersContainer" class="absolute inset-0">
-        </div>
-        
-        <!-- Legend -->
-        <div class="absolute top-3 right-3 bg-white rounded-xl shadow-lg p-3 text-xs">
-          <div class="flex items-center gap-2 mb-2">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-500">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="16" x2="12" y2="12"/>
-              <line x1="12" y1="8" x2="12.01" y2="8"/>
-            </svg>
-            <span class="font-medium text-gray-700">유동인구 밀집도</span>
-          </div>
-          <div class="space-y-1.5">
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 rounded-full bg-[#6B8DD6]"></div>
-              <span class="text-gray-600">높음</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 rounded-full bg-[#93B5FF]"></div>
-              <span class="text-gray-600">중간</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 rounded-full bg-[#C5D9FF]"></div>
-              <span class="text-gray-600">낮음</span>
-            </div>
-            <div class="flex items-center gap-2 mt-2 pt-2 border-t border-gray-100">
-              <div class="w-3 h-3 rounded-full bg-[#22C55E] border-2 border-white shadow"></div>
-              <span class="text-gray-600">내 매장</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Info Badge -->
-      <div class="px-4 py-3">
-        <div id="infoBadge" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full border border-blue-200 opacity-0">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-500">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="16" x2="12" y2="12"/>
-            <line x1="12" y1="8" x2="12.01" y2="8"/>
-          </svg>
-          <span class="text-sm font-medium text-blue-700">20대 여성 유동 인구 집중 지역</span>
-        </div>
-      </div>
-
-      <!-- Recommendations -->
-      <div class="flex-1 overflow-y-auto px-4 pb-4">
-        <h2 id="recTitle" class="text-gray-900 font-bold text-base mb-3 opacity-0">추천 광고 위치 (오후)</h2>
-        
-        <div id="recommendations" class="space-y-3">
-        </div>
-        
-        <!-- Footer Note -->
-        <div id="footerNote" class="flex items-start gap-2 mt-4 text-xs text-gray-500 opacity-0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="16" x2="12" y2="12"/>
-            <line x1="12" y1="8" x2="12.01" y2="8"/>
-          </svg>
-          <span>공공데이터 기반 유동인구 분석 결과입니다. 실제 광고 효과는 다를 수 있습니다.</span>
-        </div>
-      </div>
-
-      <!-- Home Indicator -->
-      <div class="home-indicator"></div>
-    </div>
-  </div>
-
-  <script>
-    const chatScreen = document.getElementById('chatScreen');
-    const formScreen = document.getElementById('formScreen');
-    const loadingScreen = document.getElementById('loadingScreen');
-    const resultScreen = document.getElementById('resultScreen');
-    const chatMessages = document.getElementById('chatMessages');
-    const messageInput = document.getElementById('messageInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const backBtn = document.getElementById('backBtn');
-
-    // iOS-style screen transition
-    function slideToScreen(fromScreen, toScreen, reverse = false) {
-      // Prepare toScreen
-      toScreen.classList.remove('hidden');
-      toScreen.style.display = 'flex';
-      
-      if (reverse) {
-        // Going back - toScreen slides in from left, fromScreen slides out to right
-        toScreen.classList.add('slide-in-left');
-        toScreen.classList.remove('slide-in-right', 'active');
-        
-        // Force reflow
-        toScreen.offsetHeight;
-        
-        // Animate
-        requestAnimationFrame(() => {
-          fromScreen.classList.add('slide-out-right');
-          fromScreen.classList.remove('active');
-          toScreen.classList.remove('slide-in-left');
-          toScreen.classList.add('active');
-        });
-      } else {
-        // Going forward - toScreen slides in from right, fromScreen slides out to left
-        toScreen.classList.add('slide-in-right');
-        toScreen.classList.remove('slide-in-left', 'active');
-        
-        // Force reflow
-        toScreen.offsetHeight;
-        
-        // Animate
-        requestAnimationFrame(() => {
-          fromScreen.classList.add('slide-out-left');
-          fromScreen.classList.remove('active');
-          toScreen.classList.remove('slide-in-right');
-          toScreen.classList.add('active');
-        });
-      }
-      
-      // Cleanup after animation
-      setTimeout(() => {
-        fromScreen.classList.add('hidden');
-        fromScreen.classList.remove('slide-out-left', 'slide-out-right');
-        fromScreen.style.display = '';
-      }, 350);
-    }
-
-    // Marker data
-    const markers = [
-      { x: 30, y: 50, size: 70, color: '#6B8DD6', opacity: 0.7 },
-      { x: 130, y: 130, size: 22, color: '#22C55E', opacity: 1, isStore: true },
-      { x: 85, y: 170, size: 45, color: '#93B5FF', opacity: 0.6 },
-      { x: 115, y: 210, size: 35, color: '#6B8DD6', opacity: 0.7 },
-      { x: 180, y: 95, size: 30, color: '#C5D9FF', opacity: 0.5 },
-    ];
-
-    // Recommendation data
-    const recommendations = [
-      { rank: 1, name: '논현역 1번 출구', population: '12,000' },
-      { rank: 2, name: '논현 CGV 앞', population: '9,800' },
-      { rank: 3, name: '아이플렉스 앞', population: '8,900' },
-      { rank: 4, name: '논현 사거리', population: '8,900' },
-      { rank: 5, name: '칼리오페 앞', population: '8,900' },
-    ];
-
-    function addMessage(content, isUser = false) {
-      const welcomeEl = document.getElementById('chatWelcome');
-      if (welcomeEl && chatMessages.children.length === 0) {
-        welcomeEl.style.display = 'none';
-      }
-      
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
-      messageDiv.innerHTML = `
-        <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center ${
-          isUser 
-            ? 'bg-gray-200' 
-            : 'bg-[#4169E1]'
-        }">
-          ${isUser 
-            ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
-            : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
-          }
-        </div>
-        <div class="max-w-[75%] px-4 py-3 rounded-2xl ${
-          isUser 
-            ? 'bg-gray-100 text-gray-800' 
-            : 'bg-blue-50 text-gray-800 border border-blue-100'
-        }">
+        <div class="max-w-[75%] px-4 py-3 rounded-2xl ${isUser
+                    ? 'bg-gray-100 text-gray-800'
+                    : 'bg-blue-50 text-gray-800 border border-blue-100'
+                }">
           <p class="text-sm leading-relaxed">${content}</p>
         </div>
       `;
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
 
-    function showTypingIndicator() {
-      const typingDiv = document.createElement('div');
-      typingDiv.id = 'typingIndicator';
-      typingDiv.className = 'flex items-start gap-3';
-      typingDiv.innerHTML = `
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'flex items-start gap-3';
+            typingDiv.innerHTML = `
         <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center bg-[#4169E1]">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
@@ -540,101 +631,101 @@
           </div>
         </div>
       `;
-      chatMessages.appendChild(typingDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
 
-    function removeTypingIndicator() {
-      const typingIndicator = document.getElementById('typingIndicator');
-      if (typingIndicator) {
-        typingIndicator.remove();
-      }
-    }
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
 
-    let currentStep = 0;
+        let currentStep = 0;
 
-    function sendMessage() {
-      const message = messageInput.value.trim();
-      if (!message) return;
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
 
-      if (currentStep === 0) {
-        addMessage('원하시는 고객층이 무엇인가요?');
-        currentStep = 1;
-        
-        setTimeout(() => {
-          addMessage(message, true);
-          messageInput.value = '';
-          
-          setTimeout(() => {
-            showTypingIndicator();
-            setTimeout(() => {
-              removeTypingIndicator();
-              addMessage('마라탕을 좋아하는 사람이라면 20대의 여성 층이 주요 고객이겠네요!');
-              currentStep = 2;
+            if (currentStep === 0) {
+                addMessage('원하시는 고객층이 무엇인가요?');
+                currentStep = 1;
 
-              setTimeout(() => {
+                setTimeout(() => {
+                    addMessage(message, true);
+                    messageInput.value = '';
+
+                    setTimeout(() => {
+                        showTypingIndicator();
+                        setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage('마라탕을 좋아하는 사람이라면 20대의 여성 층이 주요 고객이겠네요!');
+                            currentStep = 2;
+
+                            setTimeout(() => {
+                                showTypingIndicator();
+                                setTimeout(() => {
+                                    removeTypingIndicator();
+                                    addMessage('잠시만 기다려 주시면 적합한 광고 위치를 찾아드리겠습니다');
+
+                                    setTimeout(() => {
+                                        slideToScreen(chatScreen, formScreen);
+                                    }, 2000);
+                                }, 1500);
+                            }, 1000);
+                        }, 1800);
+                    }, 800);
+                }, 150);
+                return;
+            }
+
+            addMessage(message, true);
+            messageInput.value = '';
+
+            if (currentStep === 1) {
                 showTypingIndicator();
                 setTimeout(() => {
-                  removeTypingIndicator();
-                  addMessage('잠시만 기다려 주시면 적합한 광고 위치를 찾아드리겠습니다');
-                  
-                  setTimeout(() => {
-                    slideToScreen(chatScreen, formScreen);
-                  }, 2000);
-                }, 1500);
-              }, 1000);
-            }, 1800);
-          }, 800);
-        }, 150);
-        return;
-      }
+                    removeTypingIndicator();
+                    addMessage('마라탕을 좋아하는 사람이라면 20대의 여성 층이 주요 고객이겠네요!');
+                    currentStep = 2;
 
-      addMessage(message, true);
-      messageInput.value = '';
+                    setTimeout(() => {
+                        showTypingIndicator();
+                        setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage('잠시만 기다려 주시면 적합한 광고 위치를 찾아드리겠습니다');
 
-      if (currentStep === 1) {
-        showTypingIndicator();
-        setTimeout(() => {
-          removeTypingIndicator();
-          addMessage('마라탕을 좋아하는 사람이라면 20대의 여성 층이 주요 고객이겠네요!');
-          currentStep = 2;
+                            setTimeout(() => {
+                                slideToScreen(chatScreen, formScreen);
+                            }, 2000);
+                        }, 1500);
+                    }, 1000);
+                }, 1800);
+            }
+        }
 
-          setTimeout(() => {
-            showTypingIndicator();
+        function showResultScreen() {
+            slideToScreen(formScreen, loadingScreen);
+
             setTimeout(() => {
-              removeTypingIndicator();
-              addMessage('잠시만 기다려 주시면 적합한 광고 위치를 찾아드리겠습니다');
-              
-              setTimeout(() => {
-                slideToScreen(chatScreen, formScreen);
-              }, 2000);
-            }, 1500);
-          }, 1000);
-        }, 1800);
-      }
-    }
+                slideToScreen(loadingScreen, resultScreen);
 
-    function showResultScreen() {
-      slideToScreen(formScreen, loadingScreen);
+                setTimeout(() => {
+                    animateMarkers();
+                }, 400);
+            }, 3500);
+        }
 
-      setTimeout(() => {
-        slideToScreen(loadingScreen, resultScreen);
-        
-        setTimeout(() => {
-          animateMarkers();
-        }, 400);
-      }, 3500);
-    }
+        function animateMarkers() {
+            const markersContainer = document.getElementById('markersContainer');
+            markersContainer.innerHTML = '';
 
-    function animateMarkers() {
-      const markersContainer = document.getElementById('markersContainer');
-      markersContainer.innerHTML = '';
-
-      markers.forEach((marker, index) => {
-        setTimeout(() => {
-          const markerEl = document.createElement('div');
-          markerEl.className = 'absolute rounded-full marker-appear';
-          markerEl.style.cssText = `
+            markers.forEach((marker, index) => {
+                setTimeout(() => {
+                    const markerEl = document.createElement('div');
+                    markerEl.className = 'absolute rounded-full marker-appear';
+                    markerEl.style.cssText = `
             left: ${marker.x}px;
             top: ${marker.y}px;
             width: ${marker.size}px;
@@ -643,26 +734,26 @@
             opacity: 0;
             ${marker.isStore ? 'border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.2);' : ''}
           `;
-          markersContainer.appendChild(markerEl);
-        }, index * 400);
-      });
+                    markersContainer.appendChild(markerEl);
+                }, index * 400);
+            });
 
-      setTimeout(() => {
-        document.getElementById('infoBadge').classList.add('slide-up');
-        document.getElementById('infoBadge').style.opacity = '1';
-      }, markers.length * 400 + 200);
+            setTimeout(() => {
+                document.getElementById('infoBadge').classList.add('slide-up');
+                document.getElementById('infoBadge').style.opacity = '1';
+            }, markers.length * 400 + 200);
 
-      setTimeout(() => {
-        document.getElementById('recTitle').classList.add('slide-up');
-        document.getElementById('recTitle').style.opacity = '1';
-      }, markers.length * 400 + 400);
+            setTimeout(() => {
+                document.getElementById('recTitle').classList.add('slide-up');
+                document.getElementById('recTitle').style.opacity = '1';
+            }, markers.length * 400 + 400);
 
-      const recsContainer = document.getElementById('recommendations');
-      recommendations.forEach((rec, index) => {
-        setTimeout(() => {
-          const card = document.createElement('div');
-          card.className = 'flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl slide-up';
-          card.innerHTML = `
+            const recsContainer = document.getElementById('recommendations');
+            recommendations.forEach((rec, index) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl slide-up';
+                    card.innerHTML = `
             <div class="w-10 h-10 bg-[#4169E1] rounded-xl flex items-center justify-center text-white font-bold text-sm">
               ${rec.rank}
             </div>
@@ -671,91 +762,92 @@
               <div class="text-sm text-gray-500">예상 유동인구: ${rec.population}명</div>
             </div>
           `;
-          recsContainer.appendChild(card);
-        }, markers.length * 400 + 600 + (index * 200));
-      });
+                    recsContainer.appendChild(card);
+                }, markers.length * 400 + 600 + (index * 200));
+            });
 
-      setTimeout(() => {
-        document.getElementById('footerNote').classList.add('slide-up');
-        document.getElementById('footerNote').style.opacity = '1';
-      }, markers.length * 400 + 600 + (recommendations.length * 200) + 200);
-    }
+            setTimeout(() => {
+                document.getElementById('footerNote').classList.add('slide-up');
+                document.getElementById('footerNote').style.opacity = '1';
+            }, markers.length * 400 + 600 + (recommendations.length * 200) + 200);
+        }
 
-    sendBtn.addEventListener('click', sendMessage);
-    messageInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
-
-    analyzeBtn.addEventListener('click', showResultScreen);
-
-    backBtn.addEventListener('click', () => {
-      slideToScreen(resultScreen, formScreen, true);
-      
-      // Reset animations after transition
-      setTimeout(() => {
-        document.getElementById('markersContainer').innerHTML = '';
-        document.getElementById('recommendations').innerHTML = '';
-        document.getElementById('infoBadge').style.opacity = '0';
-        document.getElementById('infoBadge').classList.remove('slide-up');
-        document.getElementById('recTitle').style.opacity = '0';
-        document.getElementById('recTitle').classList.remove('slide-up');
-        document.getElementById('footerNote').style.opacity = '0';
-        document.getElementById('footerNote').classList.remove('slide-up');
-      }, 350);
-    });
-
-    // Form button handlers
-    document.querySelectorAll('.age-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.age-btn').forEach(b => {
-          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
-          b.classList.add('border-gray-300', 'text-gray-700');
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
         });
-        btn.classList.remove('border-gray-300', 'text-gray-700');
-        btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
-      });
-    });
 
-    document.querySelectorAll('.gender-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.gender-btn').forEach(b => {
-          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
-          b.classList.add('border-gray-300', 'text-gray-700');
-        });
-        btn.classList.remove('border-gray-300', 'text-gray-700');
-        btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
-      });
-    });
+        analyzeBtn.addEventListener('click', showResultScreen);
 
-    document.querySelectorAll('.adtype-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.adtype-btn').forEach(b => {
-          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
-          b.classList.add('border-gray-300', 'text-gray-700');
-        });
-        btn.classList.remove('border-gray-300', 'text-gray-700');
-        btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
-      });
-    });
+        backBtn.addEventListener('click', () => {
+            slideToScreen(resultScreen, formScreen, true);
 
-    document.querySelectorAll('.time-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.time-btn').forEach(b => {
-          b.classList.remove('border-blue-500', 'bg-[#4169E1]');
-          b.classList.add('border-gray-300');
-          b.querySelector('div:first-child').classList.remove('text-white');
-          b.querySelector('div:first-child').classList.add('text-gray-700');
-          b.querySelector('div:last-child').classList.remove('text-blue-100');
-          b.querySelector('div:last-child').classList.add('text-gray-500');
+            // Reset animations after transition
+            setTimeout(() => {
+                document.getElementById('markersContainer').innerHTML = '';
+                document.getElementById('recommendations').innerHTML = '';
+                document.getElementById('infoBadge').style.opacity = '0';
+                document.getElementById('infoBadge').classList.remove('slide-up');
+                document.getElementById('recTitle').style.opacity = '0';
+                document.getElementById('recTitle').classList.remove('slide-up');
+                document.getElementById('footerNote').style.opacity = '0';
+                document.getElementById('footerNote').classList.remove('slide-up');
+            }, 350);
         });
-        btn.classList.remove('border-gray-300');
-        btn.classList.add('border-blue-500', 'bg-[#4169E1]');
-        btn.querySelector('div:first-child').classList.remove('text-gray-700');
-        btn.querySelector('div:first-child').classList.add('text-white');
-        btn.querySelector('div:last-child').classList.remove('text-gray-500');
-        btn.querySelector('div:last-child').classList.add('text-blue-100');
-      });
-    });
-  </script>
+
+        // Form button handlers
+        document.querySelectorAll('.age-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.age-btn').forEach(b => {
+                    b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+                    b.classList.add('border-gray-300', 'text-gray-700');
+                });
+                btn.classList.remove('border-gray-300', 'text-gray-700');
+                btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
+            });
+        });
+
+        document.querySelectorAll('.gender-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.gender-btn').forEach(b => {
+                    b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+                    b.classList.add('border-gray-300', 'text-gray-700');
+                });
+                btn.classList.remove('border-gray-300', 'text-gray-700');
+                btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
+            });
+        });
+
+        document.querySelectorAll('.adtype-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.adtype-btn').forEach(b => {
+                    b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+                    b.classList.add('border-gray-300', 'text-gray-700');
+                });
+                btn.classList.remove('border-gray-300', 'text-gray-700');
+                btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
+            });
+        });
+
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.time-btn').forEach(b => {
+                    b.classList.remove('border-blue-500', 'bg-[#4169E1]');
+                    b.classList.add('border-gray-300');
+                    b.querySelector('div:first-child').classList.remove('text-white');
+                    b.querySelector('div:first-child').classList.add('text-gray-700');
+                    b.querySelector('div:last-child').classList.remove('text-blue-100');
+                    b.querySelector('div:last-child').classList.add('text-gray-500');
+                });
+                btn.classList.remove('border-gray-300');
+                btn.classList.add('border-blue-500', 'bg-[#4169E1]');
+                btn.querySelector('div:first-child').classList.remove('text-gray-700');
+                btn.querySelector('div:first-child').classList.add('text-white');
+                btn.querySelector('div:last-child').classList.remove('text-gray-500');
+                btn.querySelector('div:last-child').classList.add('text-blue-100');
+            });
+        });
+    </script>
 </body>
+
 </html>
