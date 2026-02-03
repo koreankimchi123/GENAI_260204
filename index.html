@@ -1,3022 +1,755 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ATIX dev | 외주개발 전문 기업</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
-        rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-
-            --accent: #FF5E00;
-            --accent-2: #FF9900;
-            --accent-alt: #CC3300;
-
-            --text: #ffffff;
-            --text-muted: #888888;
-
-            --background: #000000;
-            --secondary: #0A0A0A;
-            --primary: #000000;
-
-            --border: rgba(255, 255, 255, 0.15);
-            --glow: rgba(255, 94, 0, 0.3);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* ====== Navigation (Clean Blur Style) ====== */
-        nav {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(1200px, calc(100% - 10%));
-            z-index: 1000;
-
-            padding: 1.1rem 1.6rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-
-            background: transparent;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-
-
-            border: none;
-            box-shadow: none;
-            border-radius: 100px;
-        }
-
-
-
-
-        nav::before,
-        nav::after {
-            content: none !important;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-
-        .nav-links a::after {
-            content: none;
-        }
-
-        .nav-cta {
-            padding: 0.7rem 1.5rem;
-            background: var(--accent);
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
-            box-shadow: none;
-        }
-
-        .nav-cta:hover {
-            background: var(--accent-2);
-            transform: translateY(-2px);
-        }
-
-        /* ====== Hero Section ====== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding: 0 5%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-
-            z-index: 1;
-
-
-        }
-
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: transparent;
-        }
-
-        .floating-shapes {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            perspective: 1200px;
-        }
-
-
-        .shape {
-            position: absolute;
-            border: 1px solid rgba(255, 94, 0, 0.15);
-            border-radius: 50%;
-            animation: float 20s ease-in-out infinite;
-            background: radial-gradient(circle, rgba(255, 94, 0, 0.05), transparent);
-            box-shadow: none;
-            backdrop-filter: none;
-            transform-style: preserve-3d;
-        }
-
-        .shape:nth-child(1) {
-            width: 500px;
-            height: 500px;
-            top: -10%;
-            left: -10%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            width: 300px;
-            height: 300px;
-            top: 40%;
-            right: -5%;
-            animation-delay: -5s;
-            background: radial-gradient(circle, rgba(255, 153, 0, 0.03), transparent);
-        }
-
-        .shape:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            bottom: 10%;
-            left: 20%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(20px, -20px);
-            }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 900px;
-            transform-style: preserve-3d;
-            perspective: 1200px;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 94, 0, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out;
-            box-shadow: none;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease-out 0.2s backwards;
-            color: #fff;
-            text-shadow: none;
-        }
-
-
-        .hero h1 .gradient-text {
-            color: var(--accent);
-            -webkit-text-fill-color: initial;
-            background: none;
-            filter: none;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 620px;
-            margin: 0 auto 2.5rem;
-            animation: fadeInUp 1s ease-out 0.4s backwards;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.6s backwards;
-        }
-
-        .btn-primary {
-            padding: 1rem 2.5rem;
-            background: var(--accent);
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 1rem;
-            box-shadow: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::after {
-            content: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-2);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 94, 0, 0.3);
-        }
-
-        .btn-secondary {
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 1rem;
-            backdrop-filter: none;
-        }
-
-        .btn-secondary:hover {
-            border-color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: none;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ====== Common Section Label (2번 동일) ====== */
-        .section-label {
-            font-size: 0.85rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            display: block;
-        }
-
-        /* ====== Cube Section ====== */
-        .cube-section {
-            padding: 120px 5%;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-            padding-bottom: 200px;
-            padding-top: 100px;
-            height: 100%;
-
-            border-radius: 16px 16px 0 0;
-
-        }
-
-
-        .cube-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        .cube-text {
-            flex: 1;
-            min-width: 300px;
-            z-index: 10;
-        }
-
-        .cube-text h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: none;
-        }
-
-        .cube-text p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        .object-wrapper {
-            flex: 1;
-            min-width: 300px;
-            height: 450px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1200px;
-        }
-
-        .hologram-core {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform-style: preserve-3d;
-            animation: floatObject 6s ease-in-out infinite;
-        }
-
-        .cube {
-            width: 180px;
-            height: 180px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotateCube 15s linear infinite;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            background: rgba(255, 94, 0, 0.05);
-            border: 1px solid var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-2);
-            text-shadow: none;
-            backdrop-filter: none;
-            box-shadow: inset 0 0 20px rgba(255, 94, 0, 0.1);
-        }
-
-        .cube-face.front {
-            transform: translateZ(90px);
-        }
-
-        .cube-face.back {
-            transform: rotateY(180deg) translateZ(90px);
-        }
-
-        .cube-face.right {
-            transform: rotateY(90deg) translateZ(90px);
-        }
-
-        .cube-face.left {
-            transform: rotateY(-90deg) translateZ(90px);
-        }
-
-        .cube-face.top {
-            transform: rotateX(90deg) translateZ(90px);
-        }
-
-        .cube-face.bottom {
-            transform: rotateX(-90deg) translateZ(90px);
-        }
-
-        .cube-inner-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, var(--accent), transparent 70%);
-            filter: blur(30px);
-            opacity: 0.6;
-        }
-
-        .orbit-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            transform-style: preserve-3d;
-            pointer-events: none;
-        }
-
-
-        .ring-1 {
-            width: 400px;
-            height: 400px;
-            border: 1px solid rgba(255, 94, 0, 0.4);
-            box-shadow: none;
-            animation: rotateRing1 12s linear infinite;
-        }
-
-        .ring-2 {
-            width: 500px;
-            height: 500px;
-            border: 1px dashed rgba(255, 94, 0, 0.2);
-            animation: rotateRing2 18s linear infinite;
-        }
-
-        .ring-3 {
-            width: 340px;
-            height: 340px;
-            border: 1px dotted rgba(255, 255, 255, 0.2);
-            animation: rotateRing3 15s linear infinite;
-        }
-
-        .electron {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 6px;
-            height: 6px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-
-        .e1 {
-            transform: rotateY(0deg) translateZ(200px);
-        }
-
-        .e2 {
-            transform: rotateX(60deg) translateZ(170px);
-        }
-
-        @keyframes rotateCube {
-            0% {
-                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-            }
-
-            100% {
-                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-            }
-        }
-
-        @keyframes rotateRing1 {
-            0% {
-                transform: translate(-50%, -50%) rotateX(60deg) rotateY(0deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) rotateX(60deg) rotateY(360deg);
-            }
-        }
-
-        @keyframes rotateRing2 {
-            0% {
-                transform: translate(-50%, -50%) rotateY(-30deg) rotateX(0deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) rotateY(-30deg) rotateX(360deg);
-            }
-        }
-
-        @keyframes rotateRing3 {
-            0% {
-                transform: translate(-50%, -50%) rotateZ(45deg) rotateX(0deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) rotateZ(45deg) rotateX(360deg);
-            }
-        }
-
-        @keyframes floatObject {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        /* ====== Services ====== */
-        .services {
-            padding: 120px 5%;
-            background: var(--secondary);
-        }
-
-        .services-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .services-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .services-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: #000;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2.5rem;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: none;
-            box-shadow: none;
-        }
-
-        .service-card::before,
-        .service-card::after {
-            content: none;
-        }
-
-        .service-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(255, 94, 0, 0.1);
-        }
-
-        .service-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 94, 0, 0.1);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-            box-shadow: none;
-        }
-
-        .service-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .service-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* ====== Portfolio ====== */
-        .portfolio {
-            padding: 120px 5%;
-            background: var(--accent);
-
-            position: relative;
-        }
-
-
-        .portfolio-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .portfolio-header .section-label {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-            margin-bottom: 1rem;
-            color: #000 !important;
-        }
-
-        .portfolio-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-            color: #000 !important;
-        }
-
-        .portfolio-header p {
-            color: #000 !important;
-            font-size: 1.1rem;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            aspect-ratio: 16/10;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            box-shadow: none;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        .portfolio-item:hover {
-            border-color: var(--accent);
-            transform: none;
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            /* filter: grayscale(100%); */
-        }
-
-        .portfolio-item:hover img {
-            transform: scale(1.05);
-            /* filter: grayscale(0%); */
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 2rem;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        .portfolio-overlay h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .portfolio-overlay p {
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        .portfolio-tag {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: var(--accent);
-            border-radius: 16px;
-            font-size: 0.75rem;
-            color: #000;
-            font-weight: 700;
-            margin-top: 1rem;
-            box-shadow: none;
-            border: none;
-        }
-
-
-        .portfolio-slider {
-            width: 100%;
-            max-width: 1200px;
-            margin: 2.5rem auto 0;
-            overflow: hidden;
-        }
-
-        .portfolio-track {
-            display: flex;
-            width: 100%;
-            transform: translateX(0);
-            transition: transform 900ms cubic-bezier(.22, 1, .36, 1);
-            will-change: transform;
-        }
-
-        .portfolio-slide {
-            flex: 0 0 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 1rem;
-        }
-
-
-        .portfolio-slide .portfolio-item {
-            width: min(900px, 92vw);
-            aspect-ratio: 16/10;
-        }
-
-
-        /* ====== Stats ====== */
-        .stats {
-            padding: 80px 5%;
-            background: var(--secondary);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .stat-item {
-            perspective: none;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--accent);
-            display: inline-block;
-            filter: none;
-            -webkit-text-fill-color: initial;
-            background: none;
-            transition: none;
-        }
-
-        .stat-item:hover .stat-number {
-            transform: none;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        /* ====== Partners ====== */
-        .partners {
-            padding: 100px 5%;
-            background: var(--background);
-            overflow: hidden;
-        }
-
-        .partners-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-        }
-
-        .partners-header h2 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .partners-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .partners-slider {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-
-        .partners-track {
-            display: flex;
-            gap: 4rem;
-            animation: scroll 30s linear infinite;
-            width: max-content;
-        }
-
-        .partners-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .partner-logo {
-            flex-shrink: 0;
-            width: 160px;
-            height: 80px;
-            background: #0A0A0A;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.6;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            cursor: pointer;
-            overflow: hidden;
-            backdrop-filter: none;
-        }
-
-        .partner-logo:hover {
-            opacity: 1;
-            border-color: var(--accent);
-            transform: none;
-            box-shadow: none;
-        }
-
-        .partner-logo img {
-            max-width: 80%;
-            max-height: 60%;
-            object-fit: contain;
-            filter: grayscale(100%) brightness(0.9);
-            opacity: 0.65;
-            transition: all 0.3s ease;
-        }
-
-        .partner-logo:hover img {
-            filter: grayscale(0%) brightness(1);
-            opacity: 1;
-        }
-
-        /* ====== Testimonials ====== */
-        .testimonials {
-            padding: 120px 5%;
-            background: var(--secondary);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonials::before {
-            content: none;
-        }
-
-        .testimonials-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonials-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .testimonials-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-card {
-            background: #000;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2.5rem;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: none;
-            box-shadow: none;
-        }
-
-        .testimonial-card::before {
-            content: none;
-        }
-
-        .testimonial-card:hover {
-            border-color: var(--accent);
-            transform: none;
-            box-shadow: none;
-        }
-
-        .testimonial-stars {
-            display: flex;
-            gap: 0.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .testimonial-stars svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--accent);
-            filter: none;
-        }
-
-        .testimonial-text {
-            color: var(--text-muted);
-            margin: 1.5rem 0;
-            font-style: italic;
-            line-height: 1.8;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #222;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: none;
-        }
-
-        .testimonial-info h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .testimonial-info span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .testimonial-company {
-            color: var(--accent) !important;
-        }
-
-        /* ====== Process ====== */
-        .process {
-            padding: 120px 5%;
-            background: var(--background);
-            position: relative;
-        }
-
-        .process-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .process-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .process-header p {
-            color: var(--text-muted) !important;
-            font-size: 1.1rem;
-        }
-
-        .process-timeline {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .process-timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: #333;
-            transform: translateX(-50%);
-        }
-
-        .process-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .process-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .process-content {
-            width: 45%;
-            padding: 2rem;
-            background: #0A0A0A;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            backdrop-filter: none;
-            box-shadow: none;
-        }
-
-        .process-content:hover {
-            border-color: var(--accent);
-            transform: none;
-            box-shadow: none;
-        }
-
-        .process-number {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: #000;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--accent);
-            z-index: 10;
-            box-shadow: none;
-        }
-
-        .process-content h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .process-content p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ====== Contact ====== */
-        .contact {
-            padding: 120px 5%;
-            background: var(--secondary);
-        }
-
-        .contact-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .contact-info h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-info p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 0;
-        }
-
-        .contact-item span {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 94, 0, 0.1);
-            border: none;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            box-shadow: none;
-        }
-
-        .contact-form {
-            background: #000;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2.5rem;
-            transform-style: preserve-3d;
-            transition: all 0.3s ease;
-            backdrop-filter: none;
-            box-shadow: none;
-        }
-
-        .contact-form:hover {
-            border-color: var(--accent);
-            transform: none;
-            box-shadow: none;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: none;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 1rem;
-            background: var(--accent);
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: none;
-        }
-
-        .form-submit:hover {
-            background: var(--accent-2);
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* ====== Footer ====== */
-        footer {
-            padding: 4rem 5% 2rem;
-            background: var(--primary);
-            border-top: 1px solid #222;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #fff;
-            background: none;
-            -webkit-text-fill-color: initial;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid #111;
-            text-align: center;
-            color: #555;
-            font-size: 0.85rem;
-        }
-
-        /* ====== Mobile Menu ====== */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 2px;
-            background: #fff;
-            transition: all 0.3s ease;
-        }
-
-        .cube-section,
-        .services,
-        .portfolio,
-        .stats,
-        .partners,
-        .testimonials,
-        .process,
-        .contact,
-        footer {
-            position: relative;
-            z-index: 2;
-
-        }
-
-
-        .hero-spacer {
-            height: 100vh;
-
-        }
-
-
-        /* ====== Responsive ====== */
-        @media (max-width: 968px) {
-
-            .nav-links,
-            .nav-cta {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .cube-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-
-            .process-timeline::before {
-                left: 20px;
-            }
-
-            .process-item,
-            .process-item:nth-child(even) {
-                flex-direction: column;
-                align-items: flex-start;
-                padding-left: 50px;
-            }
-
-            .process-content {
-                width: 100%;
-            }
-
-            .process-number {
-                left: 20px;
-                transform: none;
-            }
-
-            .partners-track {
-                animation-duration: 20s;
-            }
-
-            .cube-text {
-                margin-bottom: 100px;
-                margin-top: 100px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .services-grid,
-            .portfolio-grid,
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .partner-logo {
-                width: 120px;
-                height: 60px;
-            }
-
-            .partners-track {
-                gap: 2rem;
-            }
-
-
-            #portfolio {
-                height: 100svh;
-
-                height: 100dvh;
-
-                padding: 96px 5% 56px;
-
-            }
-
-            /* 슬라이더가 실제로 남는 공간을 확실히 가지게 */
-            #portfolio .portfolio-slider {
-                flex: 1 1 auto;
-                min-height: 0;
-                overflow: hidden;
-            }
-
-
-
-
-            #portfolio .portfolio-slide .portfolio-item {
-                height: min(42svh, calc(100dvh - 96px - 56px - 120px));
-
-                max-width: 92vw;
-                width: auto;
-                aspect-ratio: 16 / 10;
-            }
-
-
-
-
-            #portfolio .portfolio-item img {
-                max-height: 100%;
-            }
-
-            .cube-text {
-                margin-bottom: 100px;
-            }
-        }
-
-        /* ====== Scroll Animations ====== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ====== Cursor glow (Orange) ====== */
-        .cursor-glow {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 94, 0, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease;
-            mix-blend-mode: screen;
-            filter: none;
-        }
-
-
-
-
-
-        #hero-text-1 {
-            display: inline-block;
-            will-change: transform;
-        }
-
-        #hero-text-2 {
-            display: inline-block;
-            will-change: transform;
-        }
-
-
-        #hero-badge,
-        #hero-details {
-            will-change: transform, opacity;
-        }
-
-
-        #hero-text-main {
-            display: inline-block;
-            will-change: transform, opacity, filter;
-            transform-origin: center center;
-        }
-
-
-        .hero-orange-overlay {
-            position: absolute;
-            inset: 0;
-            background: var(--accent);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 6;
-
-            will-change: opacity;
-        }
-
-
-        #portfolio {
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100vh;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 2rem;
-
-            padding: 120px 5% 80px;
-
-            box-sizing: border-box;
-
-            opacity: 0;
-            pointer-events: none;
-            z-index: 2;
-            overflow: hidden;
-
-        }
-
-
-        #portfolio .portfolio-slider {
-            width: 100%;
-            max-width: 1200px;
-            overflow: hidden;
-        }
-
-
-        #portfolio .portfolio-slide {
-            flex: 0 0 100%;
-            padding: 0;
-            width: 100%;
-
-        }
-
-
-        #portfolio .portfolio-slide .portfolio-item {
-            width: min(900px, 92vw);
-            margin: 0 auto;
-        }
-
-
-        #portfolio {
-            display: flex;
-            flex-direction: column;
-        }
-
-
-        #portfolio .portfolio-header {
-            flex: 0 0 auto;
-            margin-bottom: 0;
-        }
-
-        #portfolio .portfolio-slider {
-            flex: 1 1 auto;
-            display: flex;
-            align-items: center;
-            min-height: 0;
-
-        }
-
-
-        #portfolio .portfolio-track {
-            height: 100%;
-        }
-
-        #portfolio .portfolio-slide {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-        #portfolio .portfolio-slide .portfolio-item {
-
-            max-height: 100%;
-            height: min(56vh, 520px);
-
-
-
-            width: auto;
-            aspect-ratio: 16 / 10;
-
-
-            max-width: min(900px, 92vw);
-        }
-
-
-        #portfolio .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-
-
-        .portfolio-spacer {
-            height: 100vh;
-
-        }
-
-        @media (min-width: 969px) {
-            .cube-section {
-                height: 100vh;
-                padding: 0 5%;
-                display: flex;
-                align-items: center;
-                min-height: calc(100vh - 80px);
-
-                padding-top: 80px;
-
-                box-sizing: border-box;
-            }
-        }
-
-
-        nav {
-            transition: color .25s ease, background-color .25s ease, border-color .25s ease;
-        }
-
-
-        nav.on-orange .logo {
-            background: none;
-
-            -webkit-text-fill-color: initial;
-
-            color: #000;
-        }
-
-        nav.on-orange .nav-links a {
-            color: rgba(0, 0, 0, .72);
-        }
-
-        nav.on-orange .nav-links a:hover {
-            color: #000;
-        }
-
-
-        nav.on-orange .nav-cta {
-            background: #000;
-            color: #fff;
-        }
-
-        nav.on-orange .nav-cta:hover {
-            background: #111;
-        }
-
-
-        nav.on-orange .mobile-menu-btn span {
-            background: #000;
-        }
-
-        .footer-business {
-            max-width: 1200px;
-            margin: 2.2rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid #111;
-            color: rgba(255, 255, 255, 0.78);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        .footer-business-title {
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.2px;
-        }
-
-        .footer-business-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.35rem 2rem;
-        }
-
-        .footer-business-grid .row {
-            display: grid;
-            grid-template-columns: 110px 1fr;
-            gap: 0.75rem;
-            align-items: start;
-        }
-
-        .footer-business-grid .row.full {
-            grid-column: 1 / -1;
-        }
-
-        .footer-business-grid dt {
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 500;
-        }
-
-        .footer-business-grid dd {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.82);
-        }
-
-        .footer-business a {
-            color: rgba(255, 255, 255, 0.86);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .footer-business a:hover {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-
-        .biz-check {
-            margin-left: 0.4rem;
-            font-weight: 700;
-            border-bottom-style: dashed;
-        }
-
-        /* 모바일 */
-        @media (max-width: 768px) {
-            .footer-business-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-business-grid .row {
-                grid-template-columns: 92px 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="광고위치추천">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#4169E1">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%234169E1' width='100' height='100' rx='20'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='white'>🏠</text></svg>">
+  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi6rSR6rOgIOychOy5mCDstpTsspwiLCJzaG9ydF9uYW1lIjoi6rSR6rOg7JyE7LmYIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0ZGRkZGRiIsInRoZW1lX2NvbG9yIjoiIzQxNjlFMSIsInN0YXJ0X3VybCI6Ii8ifQ==">
+  <title>광고 위치 추천</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+    
+    input, textarea {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    
+    /* Safe area padding for notched devices */
+    .safe-top { padding-top: env(safe-area-inset-top); }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .typing-dot {
+      animation: bounce 0.6s infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .marker-appear {
+      animation: fadeInScale 0.5s ease-out forwards;
+    }
+    
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .slide-up {
+      animation: slideUp 0.4s ease-out forwards;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .pulse {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    /* iOS-style slide transitions */
+    .screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.35s ease;
+      will-change: transform, opacity;
+    }
+    
+    .screen.hidden {
+      display: none;
+    }
+    
+    .screen.slide-out-left {
+      transform: translateX(-30%);
+      opacity: 0.3;
+    }
+    
+    .screen.slide-in-right {
+      transform: translateX(100%);
+    }
+    
+    .screen.slide-out-right {
+      transform: translateX(100%);
+    }
+    
+    .screen.slide-in-left {
+      transform: translateX(-30%);
+      opacity: 0.3;
+    }
+    
+    .screen.active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    /* Home indicator */
+    .home-indicator {
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 100px;
+      margin: 8px auto;
+      opacity: 0.2;
+    }
+  </style>
 </head>
+<body class="bg-white overflow-hidden">
+  
+  <div id="appContainer" class="relative w-full h-full overflow-hidden">
+    
+    <!-- Chat Screen -->
+    <div id="chatScreen" class="screen active flex flex-col safe-top safe-bottom">
+      <!-- Status Bar Spacer -->
+      <div class="h-12 bg-white"></div>
+      
+      <!-- Chat Container -->
+      <div class="flex-1 flex flex-col justify-center px-6 overflow-hidden">
+        <!-- Logo and Title (centered like ChatGPT) -->
+        <div id="chatWelcome" class="text-center mb-8">
+          <div class="w-20 h-20 bg-[#4169E1] rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h1 class="text-gray-900 text-2xl font-semibold mb-3">원하시는 고객층이 무엇인가요?</h1>
+          <p class="text-gray-500 text-base leading-relaxed">타겟 고객층을 알려주시면<br/>최적의 오프라인 광고 위치를 찾아드립니다</p>
+        </div>
 
-<body>
-    <div class="cursor-glow" id="cursor"></div>
+        <!-- Chat Messages -->
+        <div id="chatMessages" class="space-y-4 max-h-[40vh] overflow-y-auto">
+        </div>
+      </div>
 
-    <nav>
-        <a class="logo" href="#hero">ATIX dev</a>
-        <ul class="nav-links">
-            <li><a href="#services">서비스</a></li>
-            <li><a href="#hero-5">포트폴리오</a></li>
-            <li><a href="#process">프로세스</a></li>
-            <li><a href="#contact">문의하기</a></li>
-        </ul>
-        <a href="#contact" class="nav-cta">프로젝트 상담</a>
-        <button class="mobile-menu-btn" aria-label="메뉴">
-            <span></span><span></span><span></span>
+      <!-- Input Area -->
+      <div class="px-5 pb-2">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="messageInput"
+            placeholder="예: 마라탕을 좋아하는 사람" 
+            class="w-full border border-gray-200 rounded-2xl px-5 py-4 pr-14 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#4169E1] focus:ring-2 focus:ring-blue-100 bg-gray-50 text-base"
+          />
+          <button 
+            id="sendBtn"
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-[#4169E1] text-white w-11 h-11 rounded-xl flex items-center justify-center active:bg-blue-700 transition-colors"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <p class="text-center text-xs text-gray-400 mt-3">AI가 분석한 결과를 기반으로 추천합니다</p>
+      </div>
+
+      <!-- Home Indicator -->
+      <div class="home-indicator"></div>
+    </div>
+
+    <!-- Form Screen -->
+    <div id="formScreen" class="screen hidden slide-in-right flex flex-col safe-top safe-bottom">
+      <!-- Header -->
+      <div class="bg-[#4169E1] px-6 pt-14 pb-8">
+        <div class="flex items-center gap-3">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <h1 class="text-white text-2xl font-bold">상권 분석</h1>
+        </div>
+        <p class="text-white/80 text-sm mt-2">매장 정보를 입력하고 최적의 광고 위치를 찾아보세요</p>
+      </div>
+
+      <!-- Form Content -->
+      <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+        <!-- 업종 -->
+        <div>
+          <label class="text-gray-700 text-sm font-medium mb-2 block">업종</label>
+          <div class="relative">
+            <select class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-gray-500 appearance-none bg-white focus:outline-none focus:border-blue-500 text-base">
+              <option>업종을 선택하세요</option>
+              <option>음식점</option>
+              <option>카페</option>
+              <option>소매점</option>
+            </select>
+            <svg class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 타겟 연령대 -->
+        <div>
+          <label class="text-gray-700 text-sm font-medium mb-3 block">타겟 연령대</label>
+          <div class="grid grid-cols-3 gap-3" id="ageGroup">
+            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="10대">10대</button>
+            <button class="age-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all" data-age="20대">20대</button>
+            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="30대">30대</button>
+            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="40대">40대</button>
+            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="50대">50대</button>
+            <button class="age-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-age="60대">60대</button>
+          </div>
+        </div>
+
+        <!-- 타겟 성별 -->
+        <div>
+          <label class="text-gray-700 text-sm font-medium mb-3 block">타겟 성별</label>
+          <div class="grid grid-cols-3 gap-3" id="genderGroup">
+            <button class="gender-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-gender="남성">남성</button>
+            <button class="gender-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all" data-gender="여성">여성</button>
+            <button class="gender-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-gender="전체">전체</button>
+          </div>
+        </div>
+
+        <!-- 매장 위치 -->
+        <div>
+          <label class="text-gray-700 text-sm font-medium mb-2 block">매장 위치</label>
+          <input 
+            type="text" 
+            id="locationInput"
+            placeholder="예: 역삼동" 
+            class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-500 text-base"
+          />
+        </div>
+
+        <!-- 광고 유형 -->
+        <div>
+          <label class="text-gray-700 text-sm font-medium mb-3 block">광고 유형</label>
+          <div class="grid grid-cols-2 gap-3" id="adTypeGroup">
+            <button class="adtype-btn py-3.5 px-4 rounded-xl border border-blue-500 bg-blue-50 text-blue-600 text-sm font-medium active:scale-95 transition-all" data-type="전단지">전단지</button>
+            <button class="adtype-btn py-3.5 px-4 rounded-xl border border-gray-300 text-sm font-medium text-gray-700 active:scale-95 transition-all" data-type="배너/현수막">배너/현수막</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Button -->
+      <div class="px-6 pb-2">
+        <div class="border-t border-gray-200 pt-4">
+          <button id="analyzeBtn" class="w-full bg-[#4169E1] text-white py-4 rounded-xl font-medium text-base active:bg-blue-700 transition-colors">
+            분석 시작하기
+          </button>
+        </div>
+      </div>
+
+      <!-- Home Indicator -->
+      <div class="home-indicator"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen hidden slide-in-right flex-col items-center justify-center safe-top safe-bottom">
+      <div class="flex flex-col items-center gap-6">
+        <div class="w-16 h-16 border-4 border-gray-200 border-t-[#4169E1] rounded-full spinner"></div>
+        <div class="text-center">
+          <p class="text-gray-800 font-medium text-lg">분석 중입니다</p>
+          <p class="text-gray-500 text-sm mt-2 pulse">유동인구 데이터를 수집하고 있습니다...</p>
+        </div>
+      </div>
+      <!-- Home Indicator -->
+      <div class="absolute bottom-0 left-0 right-0">
+        <div class="home-indicator"></div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="resultScreen" class="screen hidden slide-in-right flex-col safe-top safe-bottom">
+      <!-- Header -->
+      <div class="px-4 pt-14 pb-4 flex items-center gap-3 border-b border-gray-100 bg-white">
+        <button id="backBtn" class="p-2 -ml-2 active:bg-gray-100 rounded-full transition-colors">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
         </button>
-    </nav>
-
-    <section class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-orange-overlay" id="hero-orange-overlay"></div>
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
+        <div>
+          <h1 class="text-gray-900 font-bold text-lg">인천 논현동 유동인구 분석</h1>
+          <p class="text-gray-500 text-xs">뷰티/미용 · 전단지</p>
         </div>
+      </div>
 
-        <div class="hero-content" id="heroContent">
-            <span class="hero-badge" id="hero-badge">Premium Development Partner</span>
-            <h1>
-                <span id="hero-text-1">아이디어를</span><br>
-                <span class="gradient-text" id="hero-text-main">현실로</span><span id="hero-text-2"> &nbsp만듭니다</span>
-            </h1>
-            <div id="hero-details">
-                <p>
-                    10년 이상의 경험을 바탕으로 웹, 앱, AI 솔루션까지
-                    귀사의 디지털 혁신을 이끄는 외주개발 전문 기업입니다.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn-primary">무료 상담 신청</a>
-                    <a href="#hero-5" class="btn-secondary">더 알아보기</a>
-                </div>
-            </div>
+      <!-- Time Selection -->
+      <div class="px-4 py-3 bg-white">
+        <div class="flex items-center gap-2 mb-3">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-600">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="text-gray-700 text-sm font-medium">시간대 선택</span>
         </div>
-    </section>
-    <div class="hero-spacer" id="hero-2"></div>
-    <div class="hero-spacer" id="hero-3"></div>
-    <div class="hero-spacer" id="hero-4"></div>
-    <div class="hero-spacer" id="hero-5"></div>
-
-    <section class="portfolio" id="portfolio">
-        <div class="portfolio-header reveal">
-            <span class="section-label">Portfolio</span>
-            <h2>이런 것들을<br>만들어드려요</h2>
-            <p style="color: var(--text-muted);">다양한 산업 분야의 성공적인 프로젝트 사례를 확인하세요.</p>
+        <div class="grid grid-cols-3 gap-2" id="timeGroup">
+          <button class="time-btn py-3 px-2 rounded-xl border border-gray-300 text-center active:scale-95 transition-all" data-time="morning">
+            <div class="text-sm font-medium text-gray-700">오전</div>
+            <div class="text-xs text-gray-500">07:00-12:00</div>
+          </button>
+          <button class="time-btn py-3 px-2 rounded-xl border border-blue-500 bg-[#4169E1] text-center active:scale-95 transition-all" data-time="afternoon">
+            <div class="text-sm font-medium text-white">오후</div>
+            <div class="text-xs text-blue-100">12:00-18:00</div>
+          </button>
+          <button class="time-btn py-3 px-2 rounded-xl border border-gray-300 text-center active:scale-95 transition-all" data-time="evening">
+            <div class="text-sm font-medium text-gray-700">저녁</div>
+            <div class="text-xs text-gray-500">18:00-22:00</div>
+          </button>
         </div>
+      </div>
 
-
-        <div class="portfolio-slider">
-            <div class="portfolio-track" id="portfolioTrack">
-                <article class="portfolio-slide">
-                    <div class="portfolio-item">
-                        <img src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/7624/production/_104444203_d03fb5eb-685c-42c3-8fa2-eea0ee2dac26.jpg.webp"
-                            alt="핀테크 앱">
-                        <div class="portfolio-overlay">
-                            <h3>랜딩 페이지</h3>
-                            <p>제품 홍보 및 서비스 활성화를 위한 웹 페이지 제작</p>
-                            <span class="portfolio-tag">React Native / AI</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-slide">
-                    <div class="portfolio-item">
-                        <img src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/FA54/production/_104448046_f77ef082-1f11-4540-bab5-abcd1a5d8cd1.jpg.webp"
-                            alt="이커머스 플랫폼">
-                        <div class="portfolio-overlay">
-                            <h3>글로벌 이커머스 플랫폼</h3>
-                            <p>다국어 지원 B2B 전자상거래 플랫폼</p>
-                            <span class="portfolio-tag">Next.js / AWS</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-slide">
-                    <div class="portfolio-item">
-                        <img src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/08C4/production/_104444220_0370d30b-295c-43f4-9a02-310fae1b34bb.jpg.webp"
-                            alt="헬스케어 시스템">
-                        <div class="portfolio-overlay">
-                            <h3>스마트 헬스케어 시스템</h3>
-                            <p>IoT 연동 환자 모니터링 및 데이터 분석 시스템</p>
-                            <span class="portfolio-tag">Vue.js / GCP</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-slide">
-                    <div class="portfolio-item">
-                        <img src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/17EFC/production/_104444089_bm_06130091.jpg.webp"
-                            alt="물류 시스템">
-                        <div class="portfolio-overlay">
-                            <h3>실시간 물류 추적 시스템</h3>
-                            <p>GPS 기반 실시간 배송 추적 및 최적화 솔루션</p>
-                            <span class="portfolio-tag">Flutter / Node.js</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
+      <!-- Map Area -->
+      <div class="relative bg-gray-100 mx-4 rounded-2xl overflow-hidden" style="height: 240px;">
+        <!-- Grid lines -->
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 240">
+          <line x1="0" y1="50" x2="300" y2="170" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="0" y1="100" x2="300" y2="220" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="50" y1="0" x2="170" y2="240" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="100" y1="0" x2="220" y2="240" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="150" y1="0" x2="270" y2="240" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="0" y1="120" x2="120" y2="0" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="0" y1="170" x2="170" y2="0" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="0" y1="220" x2="220" y2="0" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="30" y1="240" x2="270" y2="0" stroke="#d1d5db" stroke-width="1"/>
+          <line x1="80" y1="240" x2="300" y2="20" stroke="#d1d5db" stroke-width="1"/>
+        </svg>
+        
+        <!-- Markers Container -->
+        <div id="markersContainer" class="absolute inset-0">
         </div>
-    </section>
-
-
-    <div class="portfolio-spacer" id="portfolio-spacer"></div>
-
-    <section class="cube-section" id="about">
-        <div class="cube-container">
-            <div class="cube-text reveal">
-                <span class="section-label">About Us</span>
-                <h2>기술로 비즈니스의<br>가능성을 확장합니다</h2>
-                <p>
-                    ATIX dev는 최신 기술 스택과 체계적인 개발 프로세스를 통해
-                    고객사의 비전을 실현합니다. 우리는 단순한 개발사가 아닌,
-                    함께 성장하는 기술 파트너입니다.
-                </p>
-                <a href="#services" class="btn-primary">서비스 알아보기</a>
+        
+        <!-- Legend -->
+        <div class="absolute top-3 right-3 bg-white rounded-xl shadow-lg p-3 text-xs">
+          <div class="flex items-center gap-2 mb-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-500">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span class="font-medium text-gray-700">유동인구 밀집도</span>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-[#6B8DD6]"></div>
+              <span class="text-gray-600">높음</span>
             </div>
-
-            <div class="object-wrapper reveal">
-                <div class="hologram-core">
-
-                    <div class="cube" id="cube">
-                        <div class="cube-inner-glow"></div>
-
-                        <div class="cube-face front">WEB</div>
-                        <div class="cube-face back">APP</div>
-                        <div class="cube-face right">AI</div>
-                        <div class="cube-face left">CLOUD</div>
-                        <div class="cube-face top">DATA</div>
-                        <div class="cube-face bottom">API</div>
-                    </div>
-
-                    <div class="orbit-ring ring-1">
-                        <div class="electron e1"></div>
-                    </div>
-                    <div class="orbit-ring ring-2"></div>
-                    <div class="orbit-ring ring-3">
-                        <div class="electron e2"></div>
-                    </div>
-
-                </div>
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-[#93B5FF]"></div>
+              <span class="text-gray-600">중간</span>
             </div>
-
-
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-[#C5D9FF]"></div>
+              <span class="text-gray-600">낮음</span>
+            </div>
+            <div class="flex items-center gap-2 mt-2 pt-2 border-t border-gray-100">
+              <div class="w-3 h-3 rounded-full bg-[#22C55E] border-2 border-white shadow"></div>
+              <span class="text-gray-600">내 매장</span>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-
-    <section class="services" id="services">
-        <div class="services-header reveal">
-            <span class="section-label">Our Services</span>
-            <h2>전문 개발 서비스</h2>
-            <p>다양한 산업 분야에서 검증된 기술력으로 최적의 솔루션을 제공합니다.</p>
+      <!-- Info Badge -->
+      <div class="px-4 py-3">
+        <div id="infoBadge" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full border border-blue-200 opacity-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-500">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span class="text-sm font-medium text-blue-700">20대 여성 유동 인구 집중 지역</span>
         </div>
+      </div>
 
-        <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                        <line x1="8" y1="21" x2="16" y2="21" />
-                        <line x1="12" y1="17" x2="12" y2="21" />
-                    </svg>
-                </div>
-                <h3>웹 개발</h3>
-                <p>React, Next.js, Vue 등 최신 프레임워크를 활용한 고성능 웹 애플리케이션 개발</p>
-            </div>
-
-            <div class="service-card reveal">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                        <line x1="12" y1="18" x2="12.01" y2="18" />
-                    </svg>
-                </div>
-                <h3>앱 개발</h3>
-                <p>iOS, Android 네이티브 및 React Native, Flutter 크로스플랫폼 앱 개발</p>
-            </div>
-
-            <div class="service-card reveal">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                    </svg>
-                </div>
-                <h3>AI/ML 솔루션</h3>
-                <p>머신러닝, 딥러닝 기반 맞춤형 AI 솔루션 및 자동화 시스템 구축</p>
-            </div>
-
-            <div class="service-card reveal">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <ellipse cx="12" cy="5" rx="9" ry="3" />
-                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                    </svg>
-                </div>
-                <h3>백엔드/클라우드</h3>
-                <p>확장 가능한 서버 아키텍처 설계 및 AWS, GCP 기반 클라우드 인프라 구축</p>
-            </div>
-
-            <div class="service-card reveal">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path
-                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                    </svg>
-                </div>
-                <h3>시스템 유지보수</h3>
-                <p>24/7 모니터링, 성능 최적화, 보안 업데이트 등 안정적인 운영 지원</p>
-            </div>
-
-            <div class="service-card reveal">
-                <div class="service-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path
-                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                        <line x1="12" y1="22.08" x2="12" y2="12" />
-                    </svg>
-                </div>
-                <h3>컨설팅</h3>
-                <p>기술 전략 수립, 아키텍처 설계, 개발 프로세스 최적화 컨설팅</p>
-            </div>
+      <!-- Recommendations -->
+      <div class="flex-1 overflow-y-auto px-4 pb-4">
+        <h2 id="recTitle" class="text-gray-900 font-bold text-base mb-3 opacity-0">추천 광고 위치 (오후)</h2>
+        
+        <div id="recommendations" class="space-y-3">
         </div>
-    </section>
-
-
-
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item reveal">
-                <div class="stat-number" data-target="150">0</div>
-                <div class="stat-label">완료 프로젝트</div>
-            </div>
-            <div class="stat-item reveal">
-                <div class="stat-number" data-target="50">0</div>
-                <div class="stat-label">기업 고객</div>
-            </div>
-            <div class="stat-item reveal">
-                <div class="stat-number" data-target="10">0</div>
-                <div class="stat-label">개발 경력 (년)</div>
-            </div>
-            <div class="stat-item reveal">
-                <div class="stat-number" data-target="98">0</div>
-                <div class="stat-label">고객 만족도 (%)</div>
-            </div>
+        
+        <!-- Footer Note -->
+        <div id="footerNote" class="flex items-start gap-2 mt-4 text-xs text-gray-500 opacity-0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span>공공데이터 기반 유동인구 분석 결과입니다. 실제 광고 효과는 다를 수 있습니다.</span>
         </div>
-    </section>
+      </div>
 
-    <section class="partners" id="partners">
-        <div class="partners-header reveal">
-            <span class="section-label">Our Partners</span>
-            <h2>함께한 기업들</h2>
-            <p>수많은 기업들이 ATIX dev와 함께 디지털 혁신을 이루었습니다.</p>
-        </div>
+      <!-- Home Indicator -->
+      <div class="home-indicator"></div>
+    </div>
+  </div>
 
-        <div class="partners-slider">
-            <div class="partners-track">
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 1"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 2"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 3"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 4"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 5"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 6"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 7"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 8"></div>
+  <script>
+    const chatScreen = document.getElementById('chatScreen');
+    const formScreen = document.getElementById('formScreen');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const chatMessages = document.getElementById('chatMessages');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const backBtn = document.getElementById('backBtn');
 
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 1"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 2"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 3"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 4"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 5"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 6"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 7"></div>
-                <div class="partner-logo"><img src="/placeholder.svg?height=80&width=160" alt="파트너사 8"></div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <section class="testimonials" id="testimonials">
-        <div class="testimonials-header reveal">
-            <span class="section-label">Testimonials</span>
-            <h2>고객 후기</h2>
-            <p>ATIX dev와 함께한 고객들의 생생한 이야기를 들어보세요.</p>
-        </div>
-
-        <div class="testimonials-grid">
-            <div class="testimonial-card reveal">
-                <div class="testimonial-content">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="testimonial-text">
-                        "처음 외주개발을 맡기는 거라 걱정이 많았는데, ATIX dev 팀의 체계적인 커뮤니케이션과
-                        기술력에 정말 감탄했습니다. 예상보다 빠른 일정에 기대 이상의 결과물을 받았습니다."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">김</div>
-                        <div class="testimonial-info">
-                            <h4>김민수 대표</h4>
-                            <span class="testimonial-company">테크스타트 Inc.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <div class="testimonial-content">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="testimonial-text">
-                        "3년째 ATIX dev와 함께 하고 있습니다. 단순한 개발사가 아닌 진정한 기술 파트너로서
-                        우리 비즈니스 성장에 큰 기여를 하고 있어요. 유지보수도 정말 빠르고 꼼꼼합니다."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">이</div>
-                        <div class="testimonial-info">
-                            <h4>이지현 CTO</h4>
-                            <span class="testimonial-company">글로벌커머스</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <div class="testimonial-content">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="testimonial-text">
-                        "AI 기반 추천 시스템 개발을 의뢰했는데, 최신 기술 트렌드를 적극 반영하면서도
-                        현실적인 솔루션을 제시해주셨습니다. 덕분에 고객 전환율이 40% 상승했습니다!"
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">박</div>
-                        <div class="testimonial-info">
-                            <h4>박준혁 팀장</h4>
-                            <span class="testimonial-company">스마트리테일</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <div class="testimonial-content">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="testimonial-text">
-                        "급하게 진행해야 하는 프로젝트였는데 무리한 일정도 아닌데 최선을 다해주셨습니다.
-                        개발 중간중간 피드백 반영도 빠르고, 마감 후 추가 수정 요청에도 친절하게 대응해주셨어요."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">정</div>
-                        <div class="testimonial-info">
-                            <h4>정서연 매니저</h4>
-                            <span class="testimonial-company">헬스케어플러스</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <div class="testimonial-content">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="testimonial-text">
-                        "모바일 앱과 웹 어드민을 동시에 개발해야 했는데, 두 플랫폼 모두 퀄리티가 뛰어났습니다.
-                        특히 UX에 대한 세심한 배려가 인상적이었고, 사용자들의 반응도 아주 좋습니다."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">최</div>
-                        <div class="testimonial-info">
-                            <h4>최영호 실장</h4>
-                            <span class="testimonial-company">에듀테크솔루션</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <div class="testimonial-content">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="testimonial-text">
-                        "레거시 시스템을 현대화하는 작업이었는데, 기존 데이터 마이그레이션부터 새로운 아키텍처 설계까지
-                        완벽하게 처리해주셨습니다. 시스템 성능이 3배 이상 개선되었어요."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">한</div>
-                        <div class="testimonial-info">
-                            <h4>한승우 이사</h4>
-                            <span class="testimonial-company">금융데이터랩</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="process" id="process">
-        <div class="process-header reveal">
-            <span class="section-label">Process</span>
-            <h2>개발 프로세스</h2>
-            <p style="color: var(--text-muted);">체계적인 프로세스로 프로젝트의 성공을 보장합니다.</p>
-        </div>
-
-        <div class="process-timeline">
-            <div class="process-item reveal">
-                <div class="process-content">
-                    <h3>요구사항 분석</h3>
-                    <p>비즈니스 목표와 기술적 요구사항을 면밀히 분석하여 최적의 솔루션을 도출합니다.</p>
-                </div>
-                <div class="process-number">1</div>
-            </div>
-
-            <div class="process-item reveal">
-                <div class="process-content">
-                    <h3>기획 & 설계</h3>
-                    <p>UX/UI 디자인과 시스템 아키텍처를 설계하고 상세 개발 계획을 수립합니다.</p>
-                </div>
-                <div class="process-number">2</div>
-            </div>
-
-            <div class="process-item reveal">
-                <div class="process-content">
-                    <h3>애자일 개발</h3>
-                    <p>스프린트 기반 반복 개발로 빠른 피드백과 지속적인 개선을 실현합니다.</p>
-                </div>
-                <div class="process-number">3</div>
-            </div>
-
-            <div class="process-item reveal">
-                <div class="process-content">
-                    <h3>테스트 & QA</h3>
-                    <p>자동화된 테스트와 철저한 품질 검증으로 안정적인 서비스를 보장합니다.</p>
-                </div>
-                <div class="process-number">4</div>
-            </div>
-
-            <div class="process-item reveal">
-                <div class="process-content">
-                    <h3>배포 & 운영</h3>
-                    <p>CI/CD 파이프라인을 통한 안정적인 배포와 지속적인 모니터링을 제공합니다.</p>
-                </div>
-                <div class="process-number">5</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="contact-info reveal">
-                <span class="section-label">Contact</span>
-                <h2>프로젝트를<br>시작해 보세요</h2>
-                <p>
-                    아이디어가 있으시다면, 무료 상담을 통해
-                    최적의 솔루션을 함께 찾아드립니다.
-                </p>
-
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                <polyline points="22,6 12,13 2,6" />
-                            </svg>
-                        </span>
-                        atix@8ix.co.kr
-                    </div>
-                    <div class="contact-item">
-                        <span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path
-                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                            </svg>
-                        </span>
-                        010-7355-8150
-                    </div>
-                    <div class="contact-item">
-                        <span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                <circle cx="12" cy="10" r="3" />
-                            </svg>
-                        </span>
-                        경기도 안산시 중보로 27, 401-443호 <br>(이동, 월드프라자)
-                    </div>
-                </div>
-            </div>
-
-            <form class="contact-form reveal">
-                <div class="form-group">
-                    <label>회사명 / 성함</label>
-                    <input type="text" placeholder="홍길동" required>
-                </div>
-                <div class="form-group">
-                    <label>이메일</label>
-                    <input type="email" placeholder="example@company.com" required>
-                </div>
-                <div class="form-group">
-                    <label>연락처</label>
-                    <input type="tel" placeholder="010-1234-5678">
-                </div>
-                <div class="form-group">
-                    <label>프로젝트 내용</label>
-                    <textarea placeholder="프로젝트에 대해 간략히 설명해 주세요..." required></textarea>
-                </div>
-                <button type="submit" class="form-submit">상담 신청하기</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">ATIX dev</div>
-            <ul class="footer-links">
-                <li><a href="#services">서비스</a></li>
-                <li><a href="#hero-5">포트폴리오</a></li>
-                <li><a href="#process">프로세스</a></li>
-                <li><a href="#contact">문의하기</a></li>
-            </ul>
-        </div>
-        <div class="footer-business">
-            <div class="footer-business-title">사업자 정보</div>
-
-            <dl class="footer-business-grid">
-                <div class="row">
-                    <dt>상호명</dt>
-                    <dd>에이틱스</dd>
-                </div>
-                <div class="row">
-                    <dt>대표자</dt>
-                    <dd>윤재호</dd>
-                </div>
-
-                <div class="row">
-                    <dt>사업자등록번호</dt>
-                    <dd>432-44-01063</dd>
-                </div>
-                <div class="row">
-                    <dt>통신판매업</dt>
-                    <dd>
-                        2025-인천연수구-0711 호
-                        <a class="biz-check" href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=4324401063" target="_blank" rel="noopener">[사업자 정보 확인]</a>
-                    </dd>
-                </div>
-
-                <div class="row full">
-                    <dt>본사</dt>
-                    <dd>경기도 안산시 중보로 27, 401-443호 (이동, 월드프라자)</dd>
-                </div>
-
-                <div class="row">
-                    <dt>e-mail</dt>
-                    <dd><a href="mailto:atix@8ix.co.kr">atix@8ix.co.kr</a></dd>
-                </div>
-                <div class="row">
-                    <dt>phone</dt>
-                    <dd><a href="tel:01073558150">010-7355-8150</a></dd>
-                </div>
-
-                <div class="row full">
-                    <dt>개인정보책임자</dt>
-                    <dd>윤재호</dd>
-                </div>
-            </dl>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 ATIX dev. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Cursor glow effect
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+    // iOS-style screen transition
+    function slideToScreen(fromScreen, toScreen, reverse = false) {
+      // Prepare toScreen
+      toScreen.classList.remove('hidden');
+      toScreen.style.display = 'flex';
+      
+      if (reverse) {
+        // Going back - toScreen slides in from left, fromScreen slides out to right
+        toScreen.classList.add('slide-in-left');
+        toScreen.classList.remove('slide-in-right', 'active');
+        
+        // Force reflow
+        toScreen.offsetHeight;
+        
+        // Animate
+        requestAnimationFrame(() => {
+          fromScreen.classList.add('slide-out-right');
+          fromScreen.classList.remove('active');
+          toScreen.classList.remove('slide-in-left');
+          toScreen.classList.add('active');
         });
-
-        // Scroll reveal animation
-        const reveals = document.querySelectorAll('.reveal');
-        function revealOnScroll() {
-            reveals.forEach(element => {
-                const windowHeight = window.innerHeight;
-                const elementTop = element.getBoundingClientRect().top;
-                const revealPoint = 150;
-                if (elementTop < windowHeight - revealPoint) element.classList.add('active');
-            });
-        }
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
-
-        // Counter animation
-        const counters = document.querySelectorAll('.stat-number');
-        let started = false;
-        function startCounting() {
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                const duration = 2000;
-                const step = target / (duration / 16);
-                let current = 0;
-
-                const updateCounter = () => {
-                    current += step;
-                    if (current < target) {
-                        counter.textContent = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                updateCounter();
-            });
-        }
-
-        const statsSection = document.querySelector('.stats');
-        function checkStats() {
-            const rect = statsSection.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0 && !started) {
-                started = true;
-                startCounting();
-            }
-        }
-        window.addEventListener('scroll', checkStats);
-        checkStats();
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
+      } else {
+        // Going forward - toScreen slides in from right, fromScreen slides out to left
+        toScreen.classList.add('slide-in-right');
+        toScreen.classList.remove('slide-in-left', 'active');
+        
+        // Force reflow
+        toScreen.offsetHeight;
+        
+        // Animate
+        requestAnimationFrame(() => {
+          fromScreen.classList.add('slide-out-left');
+          fromScreen.classList.remove('active');
+          toScreen.classList.remove('slide-in-right');
+          toScreen.classList.add('active');
         });
+      }
+      
+      // Cleanup after animation
+      setTimeout(() => {
+        fromScreen.classList.add('hidden');
+        fromScreen.classList.remove('slide-out-left', 'slide-out-right');
+        fromScreen.style.display = '';
+      }, 350);
+    }
 
-        // 3D tilt effect for service cards
-        const cards = document.querySelectorAll('.service-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-            });
+    // Marker data
+    const markers = [
+      { x: 30, y: 50, size: 70, color: '#6B8DD6', opacity: 0.7 },
+      { x: 130, y: 130, size: 22, color: '#22C55E', opacity: 1, isStore: true },
+      { x: 85, y: 170, size: 45, color: '#93B5FF', opacity: 0.6 },
+      { x: 115, y: 210, size: 35, color: '#6B8DD6', opacity: 0.7 },
+      { x: 180, y: 95, size: 30, color: '#C5D9FF', opacity: 0.5 },
+    ];
+
+    // Recommendation data
+    const recommendations = [
+      { rank: 1, name: '논현역 1번 출구', population: '12,000' },
+      { rank: 2, name: '논현 CGV 앞', population: '9,800' },
+      { rank: 3, name: '아이플렉스 앞', population: '8,900' },
+      { rank: 4, name: '논현 사거리', population: '8,900' },
+      { rank: 5, name: '칼리오페 앞', population: '8,900' },
+    ];
+
+    function addMessage(content, isUser = false) {
+      const welcomeEl = document.getElementById('chatWelcome');
+      if (welcomeEl && chatMessages.children.length === 0) {
+        welcomeEl.style.display = 'none';
+      }
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
+      messageDiv.innerHTML = `
+        <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center ${
+          isUser 
+            ? 'bg-gray-200' 
+            : 'bg-[#4169E1]'
+        }">
+          ${isUser 
+            ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+            : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+          }
+        </div>
+        <div class="max-w-[75%] px-4 py-3 rounded-2xl ${
+          isUser 
+            ? 'bg-gray-100 text-gray-800' 
+            : 'bg-blue-50 text-gray-800 border border-blue-100'
+        }">
+          <p class="text-sm leading-relaxed">${content}</p>
+        </div>
+      `;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+      const typingDiv = document.createElement('div');
+      typingDiv.id = 'typingIndicator';
+      typingDiv.className = 'flex items-start gap-3';
+      typingDiv.innerHTML = `
+        <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center bg-[#4169E1]">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="bg-blue-50 border border-blue-100 px-4 py-3 rounded-2xl">
+          <div class="flex gap-1">
+            <span class="w-2 h-2 bg-blue-400 rounded-full typing-dot"></span>
+            <span class="w-2 h-2 bg-blue-400 rounded-full typing-dot"></span>
+            <span class="w-2 h-2 bg-blue-400 rounded-full typing-dot"></span>
+          </div>
+        </div>
+      `;
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const typingIndicator = document.getElementById('typingIndicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    let currentStep = 0;
+
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      if (currentStep === 0) {
+        addMessage('원하시는 고객층이 무엇인가요?');
+        currentStep = 1;
+        
+        setTimeout(() => {
+          addMessage(message, true);
+          messageInput.value = '';
+          
+          setTimeout(() => {
+            showTypingIndicator();
+            setTimeout(() => {
+              removeTypingIndicator();
+              addMessage('마라탕을 좋아하는 사람이라면 20대의 여성 층이 주요 고객이겠네요!');
+              currentStep = 2;
+
+              setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                  removeTypingIndicator();
+                  addMessage('잠시만 기다려 주시면 적합한 광고 위치를 찾아드리겠습니다');
+                  
+                  setTimeout(() => {
+                    slideToScreen(chatScreen, formScreen);
+                  }, 2000);
+                }, 1500);
+              }, 1000);
+            }, 1800);
+          }, 800);
+        }, 150);
+        return;
+      }
+
+      addMessage(message, true);
+      messageInput.value = '';
+
+      if (currentStep === 1) {
+        showTypingIndicator();
+        setTimeout(() => {
+          removeTypingIndicator();
+          addMessage('마라탕을 좋아하는 사람이라면 20대의 여성 층이 주요 고객이겠네요!');
+          currentStep = 2;
+
+          setTimeout(() => {
+            showTypingIndicator();
+            setTimeout(() => {
+              removeTypingIndicator();
+              addMessage('잠시만 기다려 주시면 적합한 광고 위치를 찾아드리겠습니다');
+              
+              setTimeout(() => {
+                slideToScreen(chatScreen, formScreen);
+              }, 2000);
+            }, 1500);
+          }, 1000);
+        }, 1800);
+      }
+    }
+
+    function showResultScreen() {
+      slideToScreen(formScreen, loadingScreen);
+
+      setTimeout(() => {
+        slideToScreen(loadingScreen, resultScreen);
+        
+        setTimeout(() => {
+          animateMarkers();
+        }, 400);
+      }, 3500);
+    }
+
+    function animateMarkers() {
+      const markersContainer = document.getElementById('markersContainer');
+      markersContainer.innerHTML = '';
+
+      markers.forEach((marker, index) => {
+        setTimeout(() => {
+          const markerEl = document.createElement('div');
+          markerEl.className = 'absolute rounded-full marker-appear';
+          markerEl.style.cssText = `
+            left: ${marker.x}px;
+            top: ${marker.y}px;
+            width: ${marker.size}px;
+            height: ${marker.size}px;
+            background-color: ${marker.color};
+            opacity: 0;
+            ${marker.isStore ? 'border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.2);' : ''}
+          `;
+          markersContainer.appendChild(markerEl);
+        }, index * 400);
+      });
+
+      setTimeout(() => {
+        document.getElementById('infoBadge').classList.add('slide-up');
+        document.getElementById('infoBadge').style.opacity = '1';
+      }, markers.length * 400 + 200);
+
+      setTimeout(() => {
+        document.getElementById('recTitle').classList.add('slide-up');
+        document.getElementById('recTitle').style.opacity = '1';
+      }, markers.length * 400 + 400);
+
+      const recsContainer = document.getElementById('recommendations');
+      recommendations.forEach((rec, index) => {
+        setTimeout(() => {
+          const card = document.createElement('div');
+          card.className = 'flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl slide-up';
+          card.innerHTML = `
+            <div class="w-10 h-10 bg-[#4169E1] rounded-xl flex items-center justify-center text-white font-bold text-sm">
+              ${rec.rank}
+            </div>
+            <div>
+              <div class="font-medium text-gray-900">${rec.name}</div>
+              <div class="text-sm text-gray-500">예상 유동인구: ${rec.population}명</div>
+            </div>
+          `;
+          recsContainer.appendChild(card);
+        }, markers.length * 400 + 600 + (index * 200));
+      });
+
+      setTimeout(() => {
+        document.getElementById('footerNote').classList.add('slide-up');
+        document.getElementById('footerNote').style.opacity = '1';
+      }, markers.length * 400 + 600 + (recommendations.length * 200) + 200);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    analyzeBtn.addEventListener('click', showResultScreen);
+
+    backBtn.addEventListener('click', () => {
+      slideToScreen(resultScreen, formScreen, true);
+      
+      // Reset animations after transition
+      setTimeout(() => {
+        document.getElementById('markersContainer').innerHTML = '';
+        document.getElementById('recommendations').innerHTML = '';
+        document.getElementById('infoBadge').style.opacity = '0';
+        document.getElementById('infoBadge').classList.remove('slide-up');
+        document.getElementById('recTitle').style.opacity = '0';
+        document.getElementById('recTitle').classList.remove('slide-up');
+        document.getElementById('footerNote').style.opacity = '0';
+        document.getElementById('footerNote').classList.remove('slide-up');
+      }, 350);
+    });
+
+    // Form button handlers
+    document.querySelectorAll('.age-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.age-btn').forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+          b.classList.add('border-gray-300', 'text-gray-700');
         });
+        btn.classList.remove('border-gray-300', 'text-gray-700');
+        btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
+      });
+    });
 
-        // 3D tilt effect for testimonial cards
-        const testimonialCards = document.querySelectorAll('.testimonial-card');
-        testimonialCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 15;
-                const rotateY = (centerX - x) / 15;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-            });
+    document.querySelectorAll('.gender-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.gender-btn').forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+          b.classList.add('border-gray-300', 'text-gray-700');
         });
+        btn.classList.remove('border-gray-300', 'text-gray-700');
+        btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
+      });
+    });
 
-        const heroContent = document.getElementById('heroContent');
-        const cube = document.getElementById('cube');
-
-        document.addEventListener('mousemove', (e) => {
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
-            const dx = (e.clientX - cx) / cx;   // -1 ~ 1
-            const dy = (e.clientY - cy) / cy;   // -1 ~ 1
-
-            if (heroContent) {
-                heroContent.style.transform = `rotateX(${(-dy * 4).toFixed(2)}deg) rotateY(${(dx * 6).toFixed(2)}deg) translateZ(0)`;
-            }
-
-
-            // Parallax effect for hero shapes
-            const shapes = document.querySelectorAll('.shape');
-            const sx = (e.clientX - cx) / 35;
-            const sy = (e.clientY - cy) / 35;
-
-            shapes.forEach((shape, index) => {
-                const factor = (index + 1) * 0.55;
-                const rx = 55 + sy * factor;
-                const ry = 35 + sx * factor;
-                shape.style.transform = `translate(${sx * factor}px, ${sy * factor}px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(${index * 12}px)`;
-            });
+    document.querySelectorAll('.adtype-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.adtype-btn').forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-600');
+          b.classList.add('border-gray-300', 'text-gray-700');
         });
+        btn.classList.remove('border-gray-300', 'text-gray-700');
+        btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-600');
+      });
+    });
 
-        // Form submission
-        const form = document.querySelector('.contact-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
-            form.reset();
+    document.querySelectorAll('.time-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.time-btn').forEach(b => {
+          b.classList.remove('border-blue-500', 'bg-[#4169E1]');
+          b.classList.add('border-gray-300');
+          b.querySelector('div:first-child').classList.remove('text-white');
+          b.querySelector('div:first-child').classList.add('text-gray-700');
+          b.querySelector('div:last-child').classList.remove('text-blue-100');
+          b.querySelector('div:last-child').classList.add('text-gray-500');
         });
-
-
-
-        const logo = document.querySelector('a.logo');
-        if (logo) {
-            logo.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        // ===== Scroll-linked =====
-        const ideaText = document.getElementById('hero-text-1');
-        const makeText = document.getElementById('hero-text-2');
-        const badge = document.getElementById('hero-badge');
-        const details = document.getElementById('hero-details');
-
-        const mainText = document.getElementById('hero-text-main');
-        const hero3 = document.getElementById('hero-3');
-        const orangeOverlay = document.getElementById('hero-orange-overlay');
-
-        const hero5 = document.getElementById('hero-5');
-        const portfolio = document.getElementById('portfolio');
-
-        let mainDX = 0;
-        let mainDY = 0;
-        let currentMainTX = 0;
-        let currentMainTY = 0;
-
-
-
-        const hero2 = document.getElementById('hero-2');
-
-        let deltaX1 = 0;
-        let deltaX2 = 0;
-        let ticking = false;
-
-        function clamp01(v) {
-            return Math.max(0, Math.min(1, v));
-        }
-
-        function easeInOutQuad(t) {
-            return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        }
-
-        function recalcDeltas() {
-            if (ideaText) {
-                const prev1 = ideaText.style.transform;
-                ideaText.style.transform = 'translateX(0px)';
-                const rect1 = ideaText.getBoundingClientRect();
-                deltaX1 = -(rect1.left + rect1.width)
-                ideaText.style.transform = prev1 || 'translateX(0px)';
-            }
-
-
-            if (makeText) {
-                const prev2 = makeText.style.transform;
-                makeText.style.transform = 'translateX(0px)';
-                const rect2 = makeText.getBoundingClientRect();
-                const vw = window.innerWidth;
-                deltaX2 = (vw - rect2.left);
-                makeText.style.transform = prev2 || 'translateX(0px)';
-            }
-
-            if (mainText) {
-                const prev = mainText.style.transform;
-                mainText.style.transform = 'translate(0px, 0px)';
-
-                const rect = mainText.getBoundingClientRect();
-                const vw = window.innerWidth;
-                const vh = window.innerHeight;
-
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-
-                mainDX = (vw / 2) - centerX;
-                mainDY = (vh / 2) - centerY;
-
-                mainText.style.transform = prev || 'translate(0px, 0px)';
-            }
-
-        }
-
-        function update() {
-            ticking = false;
-            if (!ideaText || !hero2) return;
-
-            const start = hero2.offsetTop;                 // hero-2 시작 지점
-            const end = start + hero2.offsetHeight;        // hero-2 끝 지점(=100vh)
-            const y = window.scrollY;
-
-            const raw = (y - start) / (end - start);       // 0~1 진행률
-            const t = clamp01(raw);
-            const eased = easeInOutQuad(t);
-
-            // #hero-text-1: 왼쪽으로
-            ideaText.style.transform = `translateX(${deltaX1 * eased}px)`;
-
-            // #hero-text-2: 오른쪽으로  // ✅ 추가
-            if (makeText) {
-                makeText.style.transform = `translateX(${deltaX2 * eased}px)`;
-            }
-
-            if (badge) {
-                const badgeY = -140 * eased;
-
-                const badgeOpacity = 1 - eased;
-
-                badge.style.transform = `translateY(${badgeY}px)`;
-                badge.style.opacity = badgeOpacity.toFixed(3);
-            }
-
-            if (details) {
-                // 아래로 0 → +220px
-                const detailsY = 220 * eased;
-                const detailsOpacity = 1 - eased;
-
-                details.style.transform = `translateY(${detailsY}px)`;
-                details.style.opacity = detailsOpacity.toFixed(3);
-            }
-
-
-            if (mainText) {
-                currentMainTX = mainDX * eased;
-                currentMainTY = mainDY * eased;
-                mainText.style.transform = `translate(${currentMainTX}px, ${currentMainTY}px)`;
-            }
-
-
-            // ===== hero-3: #hero-text-main 확대 + 화면 주황 덮기 =====
-            if (mainText && hero3) {
-                const start3 = hero3.offsetTop;
-                const end3 = start3 + hero3.offsetHeight;   // 100vh
-                const y3 = window.scrollY;
-
-                const raw3 = (y3 - start3) / (end3 - start3);
-                const t3 = clamp01(raw3);
-                const eased3 = easeInOutQuad(t3);
-
-
-                const scale = 1 + (35 - 1) * eased3;
-
-
-                const blur = 0 + 2 * eased3;
-
-
-                if (orangeOverlay) {
-                    orangeOverlay.style.opacity = eased3.toFixed(3);
-                }
-
-
-                mainText.style.transform = `translate(${currentMainTX}px, ${currentMainTY}px) scale(${scale})`;
-
-
-
-
-                mainText.style.textShadow = `0 0 ${40 * eased3}px rgba(255,94,0,${0.7 * eased3})`;
-            }
-
-            // ===== hero-5: #portfolio fade-in (0 -> 1) =====
-            if (hero5 && portfolio) {
-                const start5 = hero5.offsetTop;
-                const end5 = start5 + hero5.offsetHeight; // 100vh
-                const y5 = window.scrollY;
-
-                const raw5 = (y5 - start5) / (end5 - start5);
-                const t5 = clamp01(raw5);
-                const eased5 = easeInOutQuad(t5);
-
-                // opacity만 스크롤에 따라 증가
-                portfolio.style.opacity = eased5.toFixed(3);
-
-                // 거의 다 보일 때만 클릭 가능하게
-                portfolio.style.pointerEvents = eased5 > 0.95 ? 'auto' : 'none';
-            }
-
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                ticking = true;
-                requestAnimationFrame(update);
-            }
-        }
-
-        // 초기 계산 + 이벤트 연결
-        recalcDeltas();
-        update();
-
-        window.addEventListener('scroll', requestTick, { passive: true });
-        window.addEventListener('resize', () => {
-            recalcDeltas();
-            requestTick();
-        });
-
-        //portfolio
-
-        // ===============================
-        // ✅ Scroll = Swipe Portfolio (1 step per scroll)
-        // ===============================
-        const portfolioTrack = document.getElementById('portfolioTrack');
-        const portfolioSpacer = document.getElementById('portfolio-spacer'); // 이미 존재
-        const slides = portfolioTrack ? Array.from(portfolioTrack.children) : [];
-        let slideIndex = 0;
-        let isLocking = false;
-        let wheelAccum = 0;
-        let lastWheelTime = 0;
-
-        const WHEEL_THRESHOLD = 220;
-
-
-
-        const WHEEL_RESET_MS = 180;
-
-
-        function getStep() {
-            if (!portfolioSpacer || slides.length === 0) return window.innerHeight;
-            return portfolioSpacer.offsetHeight / slides.length;
-        }
-
-
-        function getPortfolioRange() {
-            const start = portfolioSpacer.offsetTop;
-            const end = start + portfolioSpacer.offsetHeight;
-            return { start, end };
-        }
-
-
-        function goToSlide(i) {
-            if (!portfolioTrack || slides.length === 0) return;
-
-            slideIndex = Math.max(0, Math.min(slides.length - 1, i));
-            portfolioTrack.style.transform = `translateX(${-slideIndex * 100}%)`;
-        }
-
-
-        function snapScrollToSlide(targetIndex) {
-            const { start } = getPortfolioRange();
-            const step = getStep();
-            const top = start + (targetIndex * step);
-            window.scrollTo({ top, behavior: 'smooth' });
-        }
-
-
-        function syncPortfolioSpacerHeight() {
-            if (!portfolioSpacer) return;
-            const n = Math.max(1, slides.length);
-
-            const EXTRA_TAIL_PAGES = 1.5;
-            portfolioSpacer.style.height = `${(n + EXTRA_TAIL_PAGES) * 100}vh`;
-        }
-        syncPortfolioSpacerHeight();
-        window.addEventListener('resize', syncPortfolioSpacerHeight);
-
-
-        function isPortfolioActive() {
-            if (!portfolio) return false;
-            const { start, end } = getPortfolioRange();
-            const y = window.scrollY;
-            const inRange = (y >= start && y < end);
-            const visibleEnough = parseFloat(portfolio.style.opacity || "0") > 0.95; // 기존 로직과 맞춤
-            return inRange && visibleEnough;
-        }
-
-        // 휠 한 번당 한 칸 이동
-        function onWheel(e) {
-            if (!isPortfolioActive()) return;
-            if (isLocking) { e.preventDefault(); return; }
-
-            e.preventDefault();
-
-            const now = performance.now();
-            if (now - lastWheelTime > WHEEL_RESET_MS) {
-                wheelAccum = 0; // 오래 쉬었다가 다시 스크롤하면 새로 시작
-            }
-            lastWheelTime = now;
-
-
-            wheelAccum += e.deltaY;
-
-
-            if (Math.abs(wheelAccum) < WHEEL_THRESHOLD) return;
-
-            const dir = wheelAccum > 0 ? 1 : -1;
-            wheelAccum = 0; // 한 장 넘겼으면 누적 초기화
-
-            const next = slideIndex + dir;
-
-            if (next < 0) {
-                const { start } = getPortfolioRange();
-                window.scrollTo({ top: start - 1, behavior: 'smooth' });
-                return;
-            }
-            if (next > slides.length - 1) {
-                const { end } = getPortfolioRange();
-                window.scrollTo({ top: end + 1, behavior: 'smooth' });
-                return;
-            }
-
-            isLocking = true;
-            goToSlide(next);
-            snapScrollToSlide(next);
-
-            setTimeout(() => { isLocking = false; }, 950);
-        }
-
-
-        // 모바일 터치(스와이프 대신 세로 스크롤)도 한 칸씩
-        let touchStartY = null;
-        function onTouchStart(e) {
-            if (!isPortfolioActive()) return;
-            touchStartY = e.touches[0].clientY;
-        }
-        function onTouchMove(e) {
-            if (!isPortfolioActive()) return;
-            if (touchStartY == null) return;
-            if (isLocking) { e.preventDefault(); return; }
-
-            const dy = touchStartY - e.touches[0].clientY;
-            if (Math.abs(dy) < 35) return; // 임계값
-
-            e.preventDefault();
-            const dir = dy > 0 ? 1 : -1;
-
-            const next = slideIndex + dir;
-            if (next < 0 || next > slides.length - 1) { touchStartY = null; return; }
-
-            isLocking = true;
-            goToSlide(next);
-            snapScrollToSlide(next, dir);
-
-            touchStartY = null;
-            setTimeout(() => { isLocking = false; }, 950);
-        }
-
-
-        window.addEventListener('wheel', onWheel, { passive: false });
-        window.addEventListener('touchstart', onTouchStart, { passive: false });
-        window.addEventListener('touchmove', onTouchMove, { passive: false });
-
-
-        function syncSlideWithScroll() {
-            if (!portfolioTrack || slides.length === 0) return;
-
-            const { start, end } = getPortfolioRange();
-            const y = window.scrollY;
-            if (y < start || y >= end) return;
-
-            const step = getStep();
-            const idx = Math.round((y - start) / step);
-            if (!isLocking && idx !== slideIndex) goToSlide(idx);
-        }
-        window.addEventListener('scroll', syncSlideWithScroll, { passive: true });
-        syncSlideWithScroll();
-
-        // ===== nav color switch: ONLY during portfolio section =====
-        const navEl = document.querySelector('nav');
-        const portfolioSection = document.getElementById('portfolio');
-        const aboutSection = document.getElementById('about'); // "기술로 비즈니스의 가능성을 확장합니다"
-
-        function updateNavTheme() {
-            if (!navEl || !portfolioSection || !aboutSection) return;
-
-            const navRect = navEl.getBoundingClientRect();
-            const navMidY = navRect.top + navRect.height / 2;
-
-            const portRect = portfolioSection.getBoundingClientRect();
-            const aboutRect = aboutSection.getBoundingClientRect();
-
-            const portfolioVisibleEnough =
-                parseFloat(getComputedStyle(portfolioSection).opacity || '0') > 0.6;
-
-            const isOverPortfolio =
-                navMidY >= portRect.top &&
-                navMidY <= portRect.bottom &&
-                portfolioVisibleEnough;
-
-
-            const reachedAbout =
-                aboutRect.top <= navRect.bottom;
-
-            navEl.classList.toggle('on-orange', isOverPortfolio && !reachedAbout);
-        }
-
-        window.addEventListener('scroll', updateNavTheme, { passive: true });
-        window.addEventListener('resize', updateNavTheme);
-        updateNavTheme();
-
-
-
-    </script>
+        btn.classList.remove('border-gray-300');
+        btn.classList.add('border-blue-500', 'bg-[#4169E1]');
+        btn.querySelector('div:first-child').classList.remove('text-gray-700');
+        btn.querySelector('div:first-child').classList.add('text-white');
+        btn.querySelector('div:last-child').classList.remove('text-gray-500');
+        btn.querySelector('div:last-child').classList.add('text-blue-100');
+      });
+    });
+  </script>
 </body>
-
 </html>
